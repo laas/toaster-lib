@@ -7,8 +7,8 @@ class Object : public Entity
 {
 
 private:
-    int supportFurnitureId;			// id from supporting furniture if any
-    int containerId;				// id from object containing current
+    int supportFurniture;			// id from supporting furniture if any
+    int container;				// id from object containing current
     
     
 

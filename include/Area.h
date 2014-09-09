@@ -16,15 +16,13 @@ public:
     std::vector<int> insideEntities;	  			// Entities present in that area
 
     // Constructor
-    Area(int areaId):id(areaId);
+    Area(int areaId);
 
     // virtual functions
     bool isInArea(bg::model::point<double, 2, bg::cs::cartesian> center) = 0;
 
     // functions
-    bool addEntity(int entId);
-    bool removeEntity(int entId);
-    bool cleanEntity();
+    void removeEntity(int entId);
     bool isInArea(int id);
 
     // accessors, mutators

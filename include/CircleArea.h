@@ -1,6 +1,6 @@
 // This class define a circle area.
 
-#include "Area.h
+#include "Area.h"
 
 class CircleArea : Area
 {
@@ -12,10 +12,10 @@ private:
 public:
 
     // Constructor
-    CircleArea(int areaId, bg::model::point<double, 2, bg::cs::cartesian> areaCenter, double areaRay) : Area(int id);
+    CircleArea(int areaId, bg::model::point<double, 2, bg::cs::cartesian> areaCenter, double areaRay);
 
     // function
-    bool isInArea(bg::model::point<double, 2, bg::cs::cartesian> center);
+    bool isInArea(bg::model::point<double, 2, bg::cs::cartesian> point);
 
     // accessors, mutators
     bg::model::point<double, 2, bg::cs::cartesian> getCenter();

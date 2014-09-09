@@ -9,7 +9,7 @@ private:
     int maxSpeed;	// A robot has a maximum speed.
 public:
     // accessors, mutators
-    int getSpeed();
+    int getMaxSpeed();
     void setSpeed(int speed);
 };
 

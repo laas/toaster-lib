@@ -14,9 +14,7 @@ public:
     vector<int> graspableBy;		// Define who can grasp this item
 
     // functions
-    bool addAgentGrasper(int agentId);
-    bool removeAgentGrasper(int agentId);
-    bool cleanEntity();
+    void removeAgentGrasper(int agentId);
     bool canGrasp(int agentId);
 
     // accessors, mutators

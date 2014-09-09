@@ -20,13 +20,13 @@ private:
 public:
 
     // Constructor
-    Entity(int entityId):id(entityId);
+    Entity(int entityId);
 
     // functions
     bool isInArea(int areaId);
-    bool addArea(int areaId);
-    bool removeArea(int areaId);
-    bool cleanArea();
+    void addArea(int areaId);
+    void removeArea(int areaId);
+    void cleanArea();
 
     // accessors, mutators
     int getId();

@@ -9,22 +9,20 @@ class Agent : public Entity
 {
 
 private:
-    int hasFreeHand;				// Number of free hands
     Mobility mobility;				// Agent mobility
     //WorldState;				// Each agent has his own worldstate
 
 public:
+    std::vector<std::string> freeHands;		// name of free grasper joints ("hands")
     std::vector<int> hasObjects;		// Agent might have objects (in hand or not)
     std::map<std::string, Joint> skeleton;      // Map Agent joint name with a joint
 
     // functions
-    bool addObject(int objectId);
-    bool removeObject(int objectId);
-    bool cleanObject();
+    bool isHandFree(std::string hand);
+    void removeFreeHand(std::string busyHand);
+    int getNbFreeHands();
 
     // accessors, mutators
-    int getFreeHand();
-    void setFreeHand(int nbFreeHand);
     Mobility getMobility();
     void setMobility(Mobility AgentMobility);
 };
