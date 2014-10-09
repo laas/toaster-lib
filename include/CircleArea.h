@@ -15,7 +15,7 @@ public:
     CircleArea(int areaId, bg::model::point<double, 2, bg::cs::cartesian> areaCenter, double areaRay);
 
     // function
-    bool isInArea(bg::model::point<double, 2, bg::cs::cartesian> point);
+    bool isPointInArea(bg::model::point<double, 2, bg::cs::cartesian> point);
 
     // accessors, mutators
     bg::model::point<double, 2, bg::cs::cartesian> getCenter();

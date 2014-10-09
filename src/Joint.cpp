@@ -2,24 +2,16 @@
 
 #include "Joint.h"
 
-class Joint : public Entity
-{
-
-private:
-    int jointOwner;	// Agent from which this joint is
-
-public:
-
 // Constructor
-Joint::Joint(int jointId, int agent)id(jointId), jointOwner(agent){
+Joint::Joint(int jointId, int agent) : Entity(jointId), jointOwner(agent){
 }
 
 // accessors, mutators
-int getAgentId();
+int Joint::getAgentId(){
   return jointOwner;
 }
 
-void setAgentId(int agentId);
+void Joint::setAgentId(int agentId){
   jointOwner = agentId;
 };
 

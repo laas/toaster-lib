@@ -4,24 +4,24 @@
 #include "MovableObject.h"
 
 // functions
-void removeAgentGrasper(int agentId){
-  std::graspableBy<int>::iterator i = std::find(graspableBy.begin(), graspableBy.end(), agentId);
+void MovableObject::removeAgentGrasper(int agentId){
+  std::vector<int>::iterator i = std::find(graspableBy.begin(), graspableBy.end(), agentId);
   if (i != graspableBy.end())
     graspableBy.erase(i);
 }
 
-bool canGrasp(int agentId)
+bool MovableObject::canGrasp(int agentId){
   if( std::find(graspableBy.begin(), graspableBy.end(), agentId) != graspableBy.end() )
-    return true
+    return true;
   else
-    return false
+    return false;
 }
 
 // accessors, mutators
-int getSupportObject(){
+int MovableObject::getSupportObject(){
   return supportObject;
 }
 
-void setSupportObject(int idObject){
+void MovableObject::setSupportObject(int idObject){
   supportObject = idObject;
 }

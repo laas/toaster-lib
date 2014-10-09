@@ -8,16 +8,16 @@ Area::Area(int areaId) : id(areaId){
 
 // functions
 void Area::removeEntity(int entId){
-  std::insideEntities<int>::iterator i = std::find(inideEntities.begin(), insideEntities.end(), entId);
+  std::vector<int>::iterator i = std::find(insideEntities.begin(), insideEntities.end(), entId);
   if (i != insideEntities.end())
     insideEntities.erase(i);
 }
 
-bool Area::isInArea(int id){
+bool Area::isIdInArea(int id){
   if( std::find(insideEntities.begin(), insideEntities.end(), id) != insideEntities.end() )
-    return true
+    return true;
   else
-    return false
+    return false;
 }
 
 // accessors, mutators

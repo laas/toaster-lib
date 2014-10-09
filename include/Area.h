@@ -8,7 +8,7 @@ namespace bg = boost::geometry;
 class Area
 {
 
-private:
+protected:
     int id;							// each area has a unic id
     std::string name;						// area might have a name
 
@@ -19,11 +19,11 @@ public:
     Area(int areaId);
 
     // virtual functions
-    bool isInArea(bg::model::point<double, 2, bg::cs::cartesian> center) = 0;
+    virtual bool isPointInArea(bg::model::point<double, 2, bg::cs::cartesian> center) = 0;
 
     // functions
     void removeEntity(int entId);
-    bool isInArea(int id);
+    bool isIdInArea(int id);
 
     // accessors, mutators
     int getId();

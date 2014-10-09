@@ -4,28 +4,28 @@
 
 
 // Constructor
-CircleArea::CircleArea(int areaId, bg::model::point<double, 2, bg::cs::cartesian> areaCenter, double areaRay) : id(areaId), center(areaCenter), ray(areaRay){
+CircleArea::CircleArea(int areaId, bg::model::point<double, 2, bg::cs::cartesian> areaCenter, double areaRay) : Area(areaId), center(areaCenter), ray(areaRay){
 }
 
 // function
 //TODO
-bool isInArea(bg::model::point<double, 2, bg::cs::cartesian> point){
+bool CircleArea::isPointInArea(bg::model::point<double, 2, bg::cs::cartesian> point){
   return false;
 }
 
 // accessors, mutators
-bg::model::point<double, 2, bg::cs::cartesian> getCenter(){
+bg::model::point<double, 2, bg::cs::cartesian> CircleArea::getCenter(){
   return center;
 }
 
-void setCenter(bg::model::point<double, 2, bg::cs::cartesian> areaCenter){
+void CircleArea::setCenter(bg::model::point<double, 2, bg::cs::cartesian> areaCenter){
   center = areaCenter;
 }
 
-double getRay(){
+double CircleArea::getRay(){
   return ray;
 }
 
-void setRay(double areaRay){
+void CircleArea::setRay(double areaRay){
   ray = areaRay;
 }

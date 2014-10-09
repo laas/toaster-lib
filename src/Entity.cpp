@@ -12,9 +12,9 @@ Entity::Entity(int entityId) : id(entityId){
 //functions
 bool Entity::isInArea(int areaId){
   if( std::find(inArea.begin(), inArea.end(), areaId) != inArea.end() )
-    return true
+    return true;
   else
-    return false
+    return false;
 }
 
 void Entity::addArea(int areaId){
@@ -22,13 +22,13 @@ void Entity::addArea(int areaId){
 }
 
 void Entity::removeArea(int areaId){
-  std::inArea<int>::iterator i = std::find(inArea.begin(), inArea.end(), areaId);
+  std::vector<int>::iterator i = std::find(inArea.begin(), inArea.end(), areaId);
   if (i != inArea.end())
     inArea.erase(i);
 }
 
 void Entity::cleanArea(){
-  inArea.clean();
+  inArea.clear();
 }
 
 // accessors, mutators
@@ -44,7 +44,7 @@ std::string Entity::getName(){
   return name;
 }
 
-void Entity::setName(std::string entityName)
+void Entity::setName(std::string entityName){
   name = entityName;
 }
 

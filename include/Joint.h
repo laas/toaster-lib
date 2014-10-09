@@ -1,6 +1,9 @@
 // This class define a joint.
 
-#include "Agent.h"
+#ifndef JOINT_H
+  #define JOINT_H
+
+#include "Entity.h"
 
 class Joint : public Entity
 {
@@ -18,3 +21,4 @@ public:
     void setAgentId(int agentId);
 };
 
+#endif

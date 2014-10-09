@@ -1,23 +1,25 @@
 // This class define an entity.
 // An entity can be either an agent or an object.
 
+#ifndef ENTITY_H
+  #define ENTITY_H
 
-#include <boost/geometry.hpp>
-#include <vector>
-namespace bg = boost::geometry;
+  #include <boost/geometry.hpp>
+  #include <vector>
+  namespace bg = boost::geometry;
 
 
-class Entity
-{
+  class Entity
+  {
 
-private:
+  private:
     int id;							// each entity has a unic id
     std::string name;						// Entity might have a name
     bg::model::point<double, 3, bg::cs::cartesian> position;    // Entity position
-    std::vector<double> orientation(3, 0.0);                    // Entity orientation
-    std::vector<int> inArea;					// Entity might be in a specific area
+    std::vector<double> orientation;                            // Entity orientation
+    std::vector<int> inArea;					// Entity might be in a specific area(s)
 
-public:
+  public:
 
     // Constructor
     Entity(int entityId);
@@ -37,5 +39,6 @@ public:
     void setPosition(bg::model::point<double, 3, bg::cs::cartesian> point);
     std::vector<double> getOrientation();
     void setOrientation(std::vector<double> entityOrientation);
-};
+  };
+#endif
 

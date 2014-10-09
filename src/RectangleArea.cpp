@@ -3,12 +3,12 @@
 #include "RectangleArea.h"
 
 
-RectangleArea::RectangleArea(int areaId, std::vector<bg::model::point <double, 2, bg::cs::cartesian> > areaCorners) : id(areaId), corners(areaCorners){
+RectangleArea::RectangleArea(int areaId, std::vector<bg::model::point <double, 2, bg::cs::cartesian> > areaCorners) : Area(areaId), corners(areaCorners){
 }
 
 // Function
 //TODO
-bool RectangleArea::isInArea(bg::model::point<double, 2, bg::cs::cartesian> point){
+bool RectangleArea::isPointInArea(bg::model::point<double, 2, bg::cs::cartesian> point){
   return false;
 }
 
