@@ -4,15 +4,15 @@ SHELL=/bin/sh
 .c.o:
 	$(CXX) $(CFLAGS) $(CPPFLAGS) -o $@ -c $<
 
-CXX=g++
-CFLAGS=-O6 -fomit-frame-pointer
+CXX=g++ -fPIC
+CFLAGS=-shared -O6 -fomit-frame-pointer
 CPPFLAGS=-I../include -I/usr/include/ -I/home/gmilliez/devel/boost_1_56_0
 LDFLAGS= -L/usr/lib/i386-linux-gnu/ -L/usr/local/lib
 RM=/bin/rm -f
 
 ############################################################
 
-TARGET=toaster-lib
+TARGET=libToaster.so
 
 OBJ = \
 ./src/Agent.o \

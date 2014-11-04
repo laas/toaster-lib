@@ -14,8 +14,8 @@ private:
 
 public:
     std::vector<int> containedObject;		// List of id from object contained in current
-    std::vector<int> aboveObject;			// List of id from object above current
-    std::vector<int> closeObject;			// List of id from object next to current
+    std::vector<int> aboveObject;		// List of id from object above current
+    std::vector<int> closeObject;		// List of id from object next to current
 
     // accessors, mutators
     int getSupportFurniture();

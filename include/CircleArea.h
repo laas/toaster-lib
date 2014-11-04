@@ -2,7 +2,7 @@
 
 #include "Area.h"
 
-class CircleArea : Area
+class CircleArea : public Area
 {
 
 private:

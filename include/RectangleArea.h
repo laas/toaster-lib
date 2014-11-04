@@ -2,7 +2,7 @@
 
 #include "Area.h"
 
-class RectangleArea : Area
+class RectangleArea : public Area
 {
 
 private:

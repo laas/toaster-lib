@@ -17,16 +17,16 @@
     //WorldState;				// Each agent has his own worldstate
 
   public:
-    std::vector<std::string> freeHands;		// name of free grasper joints ("hands")
-    std::vector<int> hasObjects;		// Agent might have objects (in hand or not)
-    std::map<std::string, Joint> skeleton;      // Map Agent joint name with a joint
+    std::vector<int> freeHands;		// name of free grasper joints ("hands")
+    std::vector<int> hasObjects;	// Agent might have objects (in hand or not)
+    std::map<int, Joint> skeleton;      // Map Agent joint name with a joint
 
     // constructor
     Agent(int id);
 
     // functions
-    bool isHandFree(std::string hand);
-    void removeFreeHand(std::string busyHand);
+    bool isHandFree(int hand);
+    void removeFreeHand(int busyHand);
     int getNbFreeHands();
 
     // accessors, mutators

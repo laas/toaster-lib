@@ -13,11 +13,12 @@
   {
 
   private:
-    int id;							// each entity has a unic id
+    unsigned int id;						// each entity has a unic id
     std::string name;						// Entity might have a name
     bg::model::point<double, 3, bg::cs::cartesian> position;    // Entity position
     std::vector<double> orientation;                            // Entity orientation
     std::vector<int> inArea;					// Entity might be in a specific area(s)
+    unsigned long time;						// time of data in microseconds
 
   public:
 
@@ -33,6 +34,8 @@
     // accessors, mutators
     int getId();
     void setId(int entId);
+    unsigned long getTime();
+    void setTime(unsigned long entTime);
     std::string getName();
     void setName(std::string entityName);
     bg::model::point<double, 3, bg::cs::cartesian> getPosition();

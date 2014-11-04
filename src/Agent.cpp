@@ -14,15 +14,15 @@ int Agent::getNbFreeHands(){
   return freeHands.size();
 }
 
-bool Agent::isHandFree(std::string hand){
+bool Agent::isHandFree(int hand){
   if( std::find(freeHands.begin(), freeHands.end(), hand) != freeHands.end() )
     return true;
   else
     return false;
 }
 
-void Agent::removeFreeHand(std::string busyHand){
-  std::vector<std::string>::iterator i = std::find(freeHands.begin(), freeHands.end(), busyHand);
+void Agent::removeFreeHand(int busyHand){
+  std::vector<int>::iterator i = std::find(freeHands.begin(), freeHands.end(), busyHand);
   if (i != freeHands.end())
     freeHands.erase(i);
 }

@@ -39,6 +39,14 @@ int Entity::getId(){
 void Entity::setId(int entId){
   id = entId;
 }
+
+unsigned long Entity::getTime(){
+  return time;
+}
+
+void Entity::setTime(unsigned long entTime){
+  time = entTime;
+}
     
 std::string Entity::getName(){
   return name;
