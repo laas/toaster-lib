@@ -1,5 +1,8 @@
 // This class define a circle area.
 
+#ifndef CIRCLE_AREA_H
+  #define CIRCLE_AREA_H
+
 #include "Area.h"
 
 class CircleArea : public Area
@@ -24,3 +27,4 @@ public:
     void setRay(double ray);
 };
 
+#endif

@@ -1,5 +1,9 @@
 // This class define a rectangle area.
 
+#ifndef RECTANGLE_AREA_H
+  #define RECTANGLE_AREA_H
+
+
 #include "Area.h"
 
 class RectangleArea : public Area
@@ -24,3 +28,4 @@ public:
     double getHeight();
 };
 
+#endif

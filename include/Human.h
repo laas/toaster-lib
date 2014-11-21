@@ -1,5 +1,9 @@
 // This class define a Human.
 
+#ifndef AREA_H
+  #define AREA_H
+
+
 #include "Agent.h"
 
 class Human : public Agent
@@ -18,3 +22,4 @@ public:
     void setAge(int humanAge);
 };
 
+#endif

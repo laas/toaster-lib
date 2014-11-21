@@ -17,19 +17,17 @@
     std::string name;						// Entity might have a name
     bg::model::point<double, 3, bg::cs::cartesian> position;    // Entity position
     std::vector<double> orientation;                            // Entity orientation
-    std::vector<int> inArea;					// Entity might be in a specific area(s)
     unsigned long time;						// time of data in microseconds
 
   public:
+    std::vector<int> inArea;					// Entity might be in a specific area(s)
 
     // Constructor
     Entity(int entityId);
 
     // functions
     bool isInArea(int areaId);
-    void addArea(int areaId);
-    void removeArea(int areaId);
-    void cleanArea();
+    void removeInArea(int areaId);
 
     // accessors, mutators
     int getId();

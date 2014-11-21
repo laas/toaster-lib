@@ -1,5 +1,8 @@
 // This class define an area.
 
+#ifndef AREA_TOASTER_H
+  #define AREA_TOASTER_H
+
 #include <vector>
 #include <boost/geometry.hpp>
 
@@ -9,8 +12,9 @@ class Area
 {
 
 protected:
-    int id;							// each area has a unic id
-    std::string name;						// area might have a name
+    int id;				// each area has a unic id
+    std::string name;		 	// area might have a name
+    int myOwner;		        // Entity related to this area
 
 public:
     std::vector<int> insideEntities;	  			// Entities present in that area
@@ -28,7 +32,10 @@ public:
     // accessors, mutators
     int getId();
     void setId(int areaId);
+    int getMyOwner();
+    void setMyOwner(int ownerId);
     std::string getName();
     void setName(std::string areaName);
 };
 
+#endif

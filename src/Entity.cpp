@@ -17,18 +17,10 @@ bool Entity::isInArea(int areaId){
     return false;
 }
 
-void Entity::addArea(int areaId){
-  inArea.push_back(areaId);
-}
-
-void Entity::removeArea(int areaId){
+void Entity::removeInArea(int areaId){
   std::vector<int>::iterator i = std::find(inArea.begin(), inArea.end(), areaId);
   if (i != inArea.end())
     inArea.erase(i);
-}
-
-void Entity::cleanArea(){
-  inArea.clear();
 }
 
 // accessors, mutators

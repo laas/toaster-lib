@@ -1,6 +1,10 @@
 // This class define an object.
 // An object can be either a MovableObject or a StaticObject.
 
+#ifndef OBJECT_H
+  #define OBJECT_H
+
+
 #include "Entity.h"
 
 class Object : public Entity
@@ -25,3 +29,4 @@ public:
     void setContainerId(int idContainer);
 };
 
+#endif

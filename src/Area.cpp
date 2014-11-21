@@ -29,6 +29,14 @@ void Area::setId(int areaId){
   id = areaId;
 }
 
+int Area::getMyOwner(){
+  return myOwner;
+}
+
+void Area::setMyOwner(int ownerId){
+  myOwner = ownerId;
+}
+
 std::string Area::getName(){
   return name;
 }

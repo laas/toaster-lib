@@ -1,6 +1,9 @@
 // This class define a movable object.
 // i.e. an object that can be moved by an agent.
 
+#ifndef MOVABLE_OBJECT_H
+  #define MOVABLE_OBJECT_H
+
 #include "Object.h"
 
 class MovableObject : public Object
@@ -23,3 +26,4 @@ public:
 
 };
 
+#endif
