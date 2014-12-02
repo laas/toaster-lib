@@ -19,7 +19,7 @@
   public:
     std::vector<int> freeHands;		// name of free grasper joints ("hands")
     std::vector<int> hasObjects;	// Agent might have objects (in hand or not)
-    std::map<int, Joint> skeleton;      // Map Agent joint name with a joint
+    std::map<std::string, Joint*> skeleton;     // Map Agent joint name with a joint
 
     // constructor
     Agent(int id);
