@@ -1,4 +1,4 @@
 toaster-lib
 ===========
 
-Tracking Of Human (actions and belief) and Spatio-TEmporal Reasoning library
+Tracking Of Agent (actions and belief) and Spatio-TEmporal Reasoning library
