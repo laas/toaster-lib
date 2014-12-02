@@ -6,29 +6,29 @@
 #include <algorithm>
 
 // Constructor
-Entity::Entity(int entityId) : id(entityId){
+Entity::Entity(unsigned int entityId) : id(entityId){
 }
 
 //functions
-bool Entity::isInArea(int areaId){
+bool Entity::isInArea(unsigned int areaId){
   if( std::find(inArea.begin(), inArea.end(), areaId) != inArea.end() )
     return true;
   else
     return false;
 }
 
-void Entity::removeInArea(int areaId){
-  std::vector<int>::iterator i = std::find(inArea.begin(), inArea.end(), areaId);
+void Entity::removeInArea(unsigned int areaId){
+  std::vector<unsigned int>::iterator i = std::find(inArea.begin(), inArea.end(), areaId);
   if (i != inArea.end())
     inArea.erase(i);
 }
 
 // accessors, mutators
-int Entity::getId(){
+unsigned int Entity::getId(){
   return id;
 }
 
-void Entity::setId(int entId){
+void Entity::setId(unsigned int entId){
   id = entId;
 }
 

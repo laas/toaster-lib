@@ -9,16 +9,16 @@ class Joint : public Entity
 {
 
 private:
-    int jointOwner;	// Agent from which this joint is
+    unsigned int jointOwner;	// Agent from which this joint is
 
 public:
 
     // Constructor
-    Joint(int jointId, int jointOwner);
+    Joint(unsigned int jointId, unsigned int jointOwner);
 
     // accessors, mutators
-    int getAgentId();
-    void setAgentId(int agentId);
+    unsigned int getAgentId();
+    void setAgentId(unsigned int agentId);
 };
 
 #endif

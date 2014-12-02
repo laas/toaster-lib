@@ -3,15 +3,15 @@
 #include "Joint.h"
 
 // Constructor
-Joint::Joint(int jointId, int agent) : Entity(jointId), jointOwner(agent){
+Joint::Joint(unsigned int jointId, unsigned int agent) : Entity(jointId), jointOwner(agent){
 }
 
 // accessors, mutators
-int Joint::getAgentId(){
+unsigned int Joint::getAgentId(){
   return jointOwner;
 }
 
-void Joint::setAgentId(int agentId){
+void Joint::setAgentId(unsigned int agentId){
   jointOwner = agentId;
 };
 

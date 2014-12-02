@@ -20,18 +20,18 @@
     unsigned long time;						// time of data in microseconds
 
   public:
-    std::vector<int> inArea;					// Entity might be in a specific area(s)
+    std::vector<unsigned int> inArea;					// Entity might be in a specific area(s)
 
     // Constructor
-    Entity(int entityId);
+    Entity(unsigned int entityId);
 
     // functions
-    bool isInArea(int areaId);
-    void removeInArea(int areaId);
+    bool isInArea(unsigned int areaId);
+    void removeInArea(unsigned int areaId);
 
     // accessors, mutators
-    int getId();
-    void setId(int entId);
+    unsigned int getId();
+    void setId(unsigned int entId);
     unsigned long getTime();
     void setTime(unsigned long entTime);
     std::string getName();
