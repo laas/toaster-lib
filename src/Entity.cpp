@@ -6,60 +6,72 @@
 #include <algorithm>
 
 // Constructor
-Entity::Entity(unsigned int entityId) : id(entityId){
+
+Entity::Entity(unsigned int entityId) : id(entityId) {
 }
 
 //functions
-bool Entity::isInArea(unsigned int areaId){
-  if( std::find(inArea.begin(), inArea.end(), areaId) != inArea.end() )
-    return true;
-  else
-    return false;
+
+bool Entity::isInArea(unsigned int areaId) {
+    if (std::find(inArea_.begin(), inArea_.end(), areaId) != inArea_.end())
+        return true;
+    else
+        return false;
 }
 
-void Entity::removeInArea(unsigned int areaId){
-  std::vector<unsigned int>::iterator i = std::find(inArea.begin(), inArea.end(), areaId);
-  if (i != inArea.end())
-    inArea.erase(i);
+void Entity::removeInArea(unsigned int areaId) {
+    std::vector<unsigned int>::iterator i = std::find(inArea_.begin(), inArea_.end(), areaId);
+    if (i != inArea_.end())
+        inArea_.erase(i);
 }
 
 // accessors, mutators
-unsigned int Entity::getId(){
-  return id;
+
+unsigned int Entity::getId() {
+    return id;
 }
 
-void Entity::setId(unsigned int entId){
-  id = entId;
+void Entity::setId(unsigned int entId) {
+    id = entId;
 }
 
-unsigned long Entity::getTime(){
-  return time;
+unsigned long Entity::getTime() {
+    return time;
 }
 
-void Entity::setTime(unsigned long entTime){
-  time = entTime;
-}
-    
-std::string Entity::getName(){
-  return name;
+void Entity::setTime(unsigned long entTime) {
+    time = entTime;
 }
 
-void Entity::setName(std::string entityName){
-  name = entityName;
+std::string Entity::getName() {
+    return name;
 }
 
-bg::model::point<double, 3, bg::cs::cartesian> Entity::getPosition(){
-  return position;
+void Entity::setName(std::string entityName) {
+    name = entityName;
 }
 
-void Entity::setPosition(bg::model::point<double, 3, bg::cs::cartesian> point){
-  position = point;
+unsigned int Entity::getConfidence() {
+    return confidence;
 }
 
-std::vector<double> Entity::getOrientation(){
-  return orientation;
+void Entity::setConfidence(unsigned int confid){
+    confidence = confid;
 }
 
-void Entity::setOrientation(std::vector<double> entityOrientation){
-  orientation = entityOrientation;
+
+bg::model::point<double, 3, bg::cs::cartesian> Entity::getPosition() {
+    return position_;
+}
+
+void Entity::setPosition(bg::model::point<double, 3, bg::cs::cartesian> point) {
+    position_ = point;
+}
+
+std::vector<double> Entity::getOrientation() {
+    return orientation_;
+}
+
+void Entity::setOrientation(std::vector<double> entityOrientation) {
+    orientation_ = entityOrientation;
 }

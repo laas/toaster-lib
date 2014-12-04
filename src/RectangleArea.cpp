@@ -3,7 +3,7 @@
 #include "RectangleArea.h"
 
 
-RectangleArea::RectangleArea(int areaId, std::vector<bg::model::point <double, 2, bg::cs::cartesian> > areaCorners) : Area(areaId), corners(areaCorners){
+RectangleArea::RectangleArea(int areaId, std::vector<bg::model::point <double, 2, bg::cs::cartesian> > areaCorners) : Area(areaId), corners_(areaCorners){
 }
 
 // Function

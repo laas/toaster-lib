@@ -15,7 +15,7 @@ private:
 
 public:
 
-    std::vector<bg::model::point <double, 2, bg::cs::cartesian> > corners; // rectangle corners
+    std::vector<bg::model::point <double, 2, bg::cs::cartesian> > corners_; // rectangle corners
 
     // Constructor
     RectangleArea(int areaId, std::vector<bg::model::point <double, 2, bg::cs::cartesian> > areaCorners);

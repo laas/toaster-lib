@@ -14,8 +14,11 @@ private:
     int supportObject;			// Movable object may be on top of other object
 
 public:
-    std::vector<int> graspableBy;		// Define who can grasp this item
+    std::vector<int> graspableBy_;		// Define who can grasp this item
 
+    // Constructor
+    MovableObject(unsigned int id);
+    
     // functions
     void removeAgentGrasper(int agentId);
     bool canGrasp(int agentId);

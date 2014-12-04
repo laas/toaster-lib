@@ -17,7 +17,7 @@ protected:
     int myOwner;		        // Entity related to this area
 
 public:
-    std::vector<int> insideEntities;	  			// Entities present in that area
+    std::vector<int> insideEntities_;	  			// Entities present in that area
 
     // Constructor
     Area(int areaId);

@@ -3,6 +3,9 @@
 
 #include "Object.h"
 
+// Constructor
+Object::Object(unsigned int id): Entity(id){
+}
 
 // accessors, mutators
 int Object::getSupportFurniture(){

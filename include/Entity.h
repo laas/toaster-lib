@@ -15,12 +15,13 @@
   private:
     unsigned int id;						// each entity has a unic id
     std::string name;						// Entity might have a name
-    bg::model::point<double, 3, bg::cs::cartesian> position;    // Entity position
-    std::vector<double> orientation;                            // Entity orientation
     unsigned long time;						// time of data in microseconds
+    unsigned int confidence;
 
   public:
-    std::vector<unsigned int> inArea;					// Entity might be in a specific area(s)
+    bg::model::point<double, 3, bg::cs::cartesian> position_;    // Entity position
+    std::vector<double> orientation_;                            // Entity orientation
+    std::vector<unsigned int> inArea_;			        // Entity might be in a specific area(s)
 
     // Constructor
     Entity(unsigned int entityId);
@@ -36,6 +37,8 @@
     void setTime(unsigned long entTime);
     std::string getName();
     void setName(std::string entityName);
+    unsigned int getConfidence();
+    void setConfidence(unsigned int confid);
     bg::model::point<double, 3, bg::cs::cartesian> getPosition();
     void setPosition(bg::model::point<double, 3, bg::cs::cartesian> point);
     std::vector<double> getOrientation();
