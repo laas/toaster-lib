@@ -12,7 +12,7 @@ int Object::getSupportFurniture(){
   return supportFurniture;
 }
 
-void Object::setSupportFurniture(int idFurniture){
+void Object::setSupportFurniture(unsigned int idFurniture){
   supportFurniture = idFurniture;
 }
 
@@ -20,6 +20,6 @@ int Object::getContainerId(){
   return container;
 }
 
-void Object::setContainerId(int idContainer){
+void Object::setContainerId(unsigned int idContainer){
   container = idContainer;
 }
