@@ -24,3 +24,11 @@ void MathFunctions::multiplyMatrices4x4(double* result, double* mat1, double* ma
 
 
 }
+
+bg::model::point <double, 2, bg::cs::cartesian> MathFunctions::convert3dTo2d(bg::model::point<double, 3, bg::cs::cartesian> point){
+  bg::model::point <double, 2, bg::cs::cartesian> point2d;
+  point2d.set<0>(point.get<0>());
+  point2d.set<1>(point.get<1>());
+
+  return point2d;
+}
