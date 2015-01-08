@@ -1,16 +1,14 @@
 // This class define a Robot.
 
 #ifndef ROBOT_H
-  #define ROBOT_H
+#define ROBOT_H
 
 
 #include "Agent.h"
 
-class Robot : public Agent
-{
-
+class Robot : public Agent {
 private:
-    int maxSpeed;	// A robot has a maximum speed.
+    int maxSpeed; // A robot has a maximum speed.
 public:
 
     // constructor

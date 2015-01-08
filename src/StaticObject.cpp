@@ -3,9 +3,7 @@
 
 #include "Object.h"
 
-class StaticObject : public Object
-{
-
+class StaticObject : public Object {
 private:
 
 

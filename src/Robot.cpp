@@ -3,14 +3,16 @@
 #include "Robot.h"
 
 // constructor
-Robot::Robot(int id) : Agent(id){
+
+Robot::Robot(int id) : Agent(id) {
 }
 
 // accessors, mutators
-int Robot::getMaxSpeed(){
-  return maxSpeed;
+
+int Robot::getMaxSpeed() {
+    return maxSpeed;
 }
 
-void Robot::setSpeed(int speed){
-  maxSpeed = speed;
+void Robot::setSpeed(int speed) {
+    maxSpeed = speed;
 }

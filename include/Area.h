@@ -1,23 +1,23 @@
 // This class define an area.
 
 #ifndef AREA_TOASTER_H
-  #define AREA_TOASTER_H
+#define AREA_TOASTER_H
 
 #include <vector>
 #include <boost/geometry.hpp>
 
 namespace bg = boost::geometry;
 
-class Area
-{
-
+class Area {
 protected:
-    unsigned int id;				// each area has a unic id
-    std::string name;		 	// area might have a name
-    unsigned int myOwner;		        // Entity related to this area
+    unsigned int id; // each area has a unic id
+    std::string name; // area might have a name
+    unsigned int myOwner; // Entity related to this area
+    bool isRoom; // If an area is a room, we may not compute some facts
+    // if an entity is in a different room.
 
 public:
-    std::vector<unsigned int> insideEntities_;	  			// Entities present in that area
+    std::vector<unsigned int> insideEntities_; // Entities present in that area
 
     // Constructor
     Area(unsigned int areaId);
@@ -36,6 +36,8 @@ public:
     void setMyOwner(int ownerId);
     std::string getName();
     void setName(std::string areaName);
+    bool getIsRoom();
+    void setIsRoom(bool isRoom);
 };
 
 #endif

@@ -4,22 +4,24 @@
 #include "Object.h"
 
 // Constructor
-Object::Object(unsigned int id): Entity(id){
+
+Object::Object(unsigned int id) : Entity(id) {
 }
 
 // accessors, mutators
-int Object::getSupportFurniture(){
-  return supportFurniture;
+
+int Object::getSupportFurniture() {
+    return supportFurniture;
 }
 
-void Object::setSupportFurniture(unsigned int idFurniture){
-  supportFurniture = idFurniture;
+void Object::setSupportFurniture(unsigned int idFurniture) {
+    supportFurniture = idFurniture;
 }
 
-int Object::getContainerId(){
-  return container;
+int Object::getContainerId() {
+    return container;
 }
 
-void Object::setContainerId(unsigned int idContainer){
-  container = idContainer;
+void Object::setContainerId(unsigned int idContainer) {
+    container = idContainer;
 }

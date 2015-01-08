@@ -3,44 +3,55 @@
 #include "Area.h"
 
 // Constructor
-Area::Area(unsigned int areaId) : id(areaId){
+
+Area::Area(unsigned int areaId) : id(areaId) {
 }
 
 // functions
-void Area::removeEntity(unsigned int entId){
-  std::vector<unsigned int>::iterator i = std::find(insideEntities_.begin(), insideEntities_.end(), entId);
-  if (i != insideEntities_.end())
-    insideEntities_.erase(i);
+
+void Area::removeEntity(unsigned int entId) {
+    std::vector<unsigned int>::iterator i = std::find(insideEntities_.begin(), insideEntities_.end(), entId);
+    if (i != insideEntities_.end())
+        insideEntities_.erase(i);
 }
 
-bool Area::isIdInArea(unsigned int id){
-  if( std::find(insideEntities_.begin(), insideEntities_.end(), id) != insideEntities_.end() )
-    return true;
-  else
-    return false;
+bool Area::isIdInArea(unsigned int id) {
+    if (std::find(insideEntities_.begin(), insideEntities_.end(), id) != insideEntities_.end())
+        return true;
+    else
+        return false;
 }
 
 // accessors, mutators
-unsigned int Area::getId(){
-  return id;
+
+unsigned int Area::getId() {
+    return id;
 }
 
-void Area::setId(unsigned int areaId){
-  id = areaId;
+void Area::setId(unsigned int areaId) {
+    id = areaId;
 }
 
-unsigned int Area::getMyOwner(){
-  return myOwner;
+unsigned int Area::getMyOwner() {
+    return myOwner;
 }
 
-void Area::setMyOwner(int ownerId){
-  myOwner = ownerId;
+void Area::setMyOwner(int ownerId) {
+    myOwner = ownerId;
 }
 
-std::string Area::getName(){
-  return name;
+std::string Area::getName() {
+    return name;
 }
 
-void Area::setName(std::string areaName){
-  name = areaName;
+void Area::setName(std::string areaName) {
+    name = areaName;
+}
+
+bool Area::getIsRoom() {
+    return isRoom;
+}
+
+void Area::setIsRoom(bool room) {
+    isRoom = room;
 }

@@ -55,10 +55,17 @@ unsigned int Entity::getConfidence() {
     return confidence;
 }
 
-void Entity::setConfidence(unsigned int confid){
+void Entity::setConfidence(unsigned int confid) {
     confidence = confid;
 }
 
+unsigned int Entity::getRoomId() {
+    return roomId;
+}
+
+void Entity::setRoomId(unsigned int id) {
+    roomId = id;
+}
 
 bg::model::point<double, 3, bg::cs::cartesian> Entity::getPosition() {
     return position_;

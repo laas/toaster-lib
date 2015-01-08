@@ -1,16 +1,14 @@
 // This class define a circle area.
 
 #ifndef CIRCLE_AREA_H
-  #define CIRCLE_AREA_H
+#define CIRCLE_AREA_H
 
 #include "Area.h"
 
-class CircleArea : public Area
-{
-
+class CircleArea : public Area {
 private:
-    bg::model::point<double, 2, bg::cs::cartesian> center;    // position of the center
-    double ray;						      // ray of the circle
+    bg::model::point<double, 2, bg::cs::cartesian> center; // position of the center
+    double ray; // ray of the circle
 
 public:
 

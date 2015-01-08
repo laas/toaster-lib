@@ -1,16 +1,14 @@
 // This class define a Human.
 
 #ifndef AREA_H
-  #define AREA_H
+#define AREA_H
 
 
 #include "Agent.h"
 
-class Human : public Agent
-{
-
+class Human : public Agent {
 private:
-    int age;		// Humans have an age
+    int age; // Humans have an age
 
 public:
 
