@@ -12,7 +12,7 @@
 #include <boost/circular_buffer.hpp>
 
 template <typename T> class TRBuffer {
-    boost::circular_buffer<long> m_TimeBuffer;
+    boost::circular_buffer<unsigned long> m_TimeBuffer;
     boost::circular_buffer<T> m_DataBuffer;
 
 public:
@@ -57,7 +57,7 @@ public:
     // If TRBuffer is full, the first element will be removed. 
     // If the capacity is 0, nothing will be inserted.
 
-    void push_back(long time, const T &data) {
+    void push_back(unsigned long time, const T &data) {
         m_TimeBuffer.push_back(time);
         m_DataBuffer.push_back(data);
     }
@@ -84,7 +84,7 @@ public:
         return m_DataBuffer.front();
     }
     
-    bool getData(long time, T &data) {
+    bool getData(unsigned long time, T &data) {
         int result;
         result = getIndex(time);
         if (result < 0)
@@ -114,7 +114,7 @@ public:
                 if (m_TimeBuffer[i] == time)
                     return i;
                 else if (m_TimeBuffer[i] > time) {
-                    printf("No data was found at time %d\n", time);
+                    printf("No data was found at time %lu\n", time);
                     return -1;
                 }
             }
@@ -123,13 +123,13 @@ public:
 
     // Here after means strictly greater time.
 
-    int getIndexAfter(long time) {
+    int getIndexAfter(unsigned long time) {
         if (!m_TimeBuffer.empty()) {
-            for (int i = 0; i < m_TimeBuffer.size(); i++) {
+            for (unsigned int i = 0; i < m_TimeBuffer.size(); i++) {
                 if (m_TimeBuffer[i] > time)
                     return i;
             }
-            printf("No data was found after time %d\n", time);
+            printf("No data was found after time %lu\n", time);
             return -1;
         }
     }
