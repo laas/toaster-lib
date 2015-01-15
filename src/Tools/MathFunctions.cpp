@@ -32,3 +32,24 @@ bg::model::point <double, 2, bg::cs::cartesian> MathFunctions::convert3dTo2d(bg:
 
   return point2d;
 }
+
+// Return true if ent2 is in the angle from ent1 with direction angleDir and size angleThreshold
+double MathFunctions::isInAngle(Entity* ent1, Entity* ent2, double angleDir, double angleThreshold) {
+    double actualAngleDir = acos((fabs(ent1->getPosition().get<0>() - ent2->getPosition().get<0>()))
+            / bg::distance(MathFunctions::convert3dTo2d(ent1->getPosition()), MathFunctions::convert3dTo2d(ent2->getPosition())));
+
+    // Trigonometric adjustment
+    if (ent2->getPosition().get<0>() < ent1->getPosition().get<0>())
+        actualAngleDir = 3.1416 - actualAngleDir;
+
+    if (ent2->getPosition().get<1>() < ent1->getPosition().get<1>())
+        actualAngleDir = -actualAngleDir;
+
+    double angleResult = fabs(angleDir - actualAngleDir);
+
+    if (angleResult > angleThreshold) {
+        return 0.0;
+    } else {
+        return (angleThreshold - angleResult) / angleThreshold;
+    }
+}

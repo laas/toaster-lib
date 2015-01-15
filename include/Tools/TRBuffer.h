@@ -79,11 +79,11 @@ public:
     T& back() {
         return m_DataBuffer.back();
     }
-    
+
     T& front() {
         return m_DataBuffer.front();
     }
-    
+
     bool getData(unsigned long time, T &data) {
         int result;
         result = getIndex(time);
@@ -114,7 +114,7 @@ public:
                 if (m_TimeBuffer[i] == time)
                     return i;
                 else if (m_TimeBuffer[i] > time) {
-                    printf("No data was found at time %lu\n", time);
+                    printf("[TRBuffer][Warning] No data was found at time %lu\n", time);
                     return -1;
                 }
             }
@@ -129,7 +129,10 @@ public:
                 if (m_TimeBuffer[i] > time)
                     return i;
             }
-            printf("No data was found after time %lu\n", time);
+            printf("[TRBuffer][Warning] No data were found after time %lu\n", time);
+            return -1;
+        } else {
+            printf("[TRBuffer][Warning] Looking for index in empty buffer!\n");
             return -1;
         }
     }
