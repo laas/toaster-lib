@@ -10,10 +10,14 @@ namespace bg = boost::geometry;
 
 class Area {
 protected:
-    unsigned int id; // each area has a unic id
-    std::string name; // area might have a name
-    unsigned int myOwner; // Entity related to this area
-    bool isRoom; // If an area is a room, we may not compute some facts
+    unsigned int id;       // each area has a unic id
+    std::string name;      // area might have a name
+    unsigned int myOwner;  // Entity related to this area
+    bool isRoom;           // If an area is a room, we may not compute some facts
+                           // if an entity is in a different room.
+    std::string factType;  // This is used to know what fact we should compute
+    std::string entityType; // This is used to know what entities are concerned: entities, agents, robots, humans, objects
+    bool isCircle;         // To know if it is a circle area or a polygon one.
     // if an entity is in a different room.
 
 public:
@@ -38,6 +42,12 @@ public:
     void setName(std::string areaName);
     bool getIsRoom();
     void setIsRoom(bool isRoom);
+    std::string getFactType();
+    void setFactType(std::string myFactType);
+    std::string getEntityType();
+    void setEntityType(std::string myEntityType);
+    bool getIsCircle();
+    void setIsCircle(bool isCircle);
 };
 
 #endif

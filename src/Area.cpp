@@ -55,3 +55,27 @@ bool Area::getIsRoom() {
 void Area::setIsRoom(bool room) {
     isRoom = room;
 }
+
+std::string Area::getFactType() {
+    return factType;
+}
+
+void Area::setFactType(std::string myFactType) {
+    factType = myFactType;
+}
+
+std::string Area::getEntityType() {
+    return entityType;
+}
+
+void Area::setEntityType(std::string myEntityType) {
+    entityType = myEntityType;
+}
+
+bool Area::getIsCircle() {
+    return isCircle;
+}
+
+void Area::setIsCircle(bool circle) {
+    isCircle = circle;
+}
