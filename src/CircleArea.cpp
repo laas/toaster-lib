@@ -36,3 +36,11 @@ double CircleArea::getRay() {
 void CircleArea::setRay(double areaRay) {
     ray = areaRay;
 }
+
+bg::model::point<double, 2, bg::cs::cartesian> CircleArea::getOffsetFromOwner() {
+    return offsetFromOwner;
+}
+
+void CircleArea::setOffsetFromOwner(bg::model::point<double, 2, bg::cs::cartesian> offset) {
+    offsetFromOwner = offset;
+}

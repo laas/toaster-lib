@@ -10,6 +10,7 @@ BOOST_GEOMETRY_REGISTER_BOOST_TUPLE_CS(cs::cartesian)
 PolygonArea::PolygonArea(int areaId, double points[][2], unsigned int polySize) : Area(areaId) {
     for (unsigned int i = 0; i < polySize; i++) {
         bg::model::d2::point_xy<double> p(points[i][0], points[i][1]);
+        bg::append(polyRelative_, p);
         bg::append(poly_, p);
     }
 }
@@ -21,3 +22,8 @@ bool PolygonArea::isPointInArea(bg::model::point<double, 2, bg::cs::cartesian> p
     return bg::within(p, poly_);
 }
 
+// Accessors
+
+bg::model::polygon<bg::model::d2::point_xy<double> > PolygonArea::getPolyRelative() {
+    return polyRelative_;
+}

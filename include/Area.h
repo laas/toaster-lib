@@ -18,7 +18,6 @@ protected:
     std::string factType;  // This is used to know what fact we should compute
     std::string entityType; // This is used to know what entities are concerned: entities, agents, robots, humans, objects
     bool isCircle;         // To know if it is a circle area or a polygon one.
-    // if an entity is in a different room.
 
 public:
     std::vector<unsigned int> insideEntities_; // Entities present in that area

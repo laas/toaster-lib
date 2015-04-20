@@ -10,6 +10,7 @@
 
 class PolygonArea : public Area {
 private:
+    bg::model::polygon<bg::model::d2::point_xy<double> > polyRelative_; //If area updated, this won't be changed
 
 
 public:
@@ -20,6 +21,9 @@ public:
 
     // Function
     bool isPointInArea(bg::model::point<double, 2, bg::cs::cartesian> point);
+
+    // accessors
+    bg::model::polygon<bg::model::d2::point_xy<double> > getPolyRelative();
 
 };
 

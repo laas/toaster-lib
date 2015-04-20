@@ -9,6 +9,8 @@ class CircleArea : public Area {
 private:
     bg::model::point<double, 2, bg::cs::cartesian> center; // position of the center
     double ray; // ray of the circle
+    bg::model::point<double, 2, bg::cs::cartesian> offsetFromOwner; // If area is updated from owner,
+                                                                    // we may want an offset from this owner
 
 public:
 
@@ -23,6 +25,8 @@ public:
     void setCenter(bg::model::point<double, 2, bg::cs::cartesian> areaCenter);
     double getRay();
     void setRay(double ray);
+    bg::model::point<double, 2, bg::cs::cartesian> getOffsetFromOwner();
+    void setOffsetFromOwner(bg::model::point<double, 2, bg::cs::cartesian> offset);
 };
 
 #endif
