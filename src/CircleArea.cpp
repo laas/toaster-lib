@@ -6,7 +6,7 @@
 
 // Constructor
 
-CircleArea::CircleArea(int areaId, bg::model::point<double, 2, bg::cs::cartesian> areaCenter, double areaRay) : Area(areaId), center(areaCenter), ray(areaRay) {
+CircleArea::CircleArea(int areaId, bg::model::point<double, 2, bg::cs::cartesian> areaCenter, double areaRay) : Area(areaId), center(areaCenter), centerRelative(areaCenter), ray(areaRay) {
 }
 
 // function
@@ -37,10 +37,6 @@ void CircleArea::setRay(double areaRay) {
     ray = areaRay;
 }
 
-bg::model::point<double, 2, bg::cs::cartesian> CircleArea::getOffsetFromOwner() {
-    return offsetFromOwner;
-}
-
-void CircleArea::setOffsetFromOwner(bg::model::point<double, 2, bg::cs::cartesian> offset) {
-    offsetFromOwner = offset;
+bg::model::point<double, 2, bg::cs::cartesian> CircleArea::getCenterRelative() {
+    return centerRelative;
 }
