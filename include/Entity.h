@@ -7,7 +7,7 @@
   #include <boost/geometry.hpp>
   #include <vector>
   namespace bg = boost::geometry;
-
+  enum EntityType { ROBOT, HUMAN, OBJECT, JOINT };
 
   class Entity
   {
@@ -18,6 +18,7 @@
     unsigned long time;						// time of data in microseconds
     unsigned int confidence;
     unsigned int roomId;
+    EntityType entityType;
 
   public:
     bg::model::point<double, 3, bg::cs::cartesian> position_;    // Entity position
@@ -46,6 +47,8 @@
     void setPosition(bg::model::point<double, 3, bg::cs::cartesian> point);
     std::vector<double> getOrientation();
     void setOrientation(std::vector<double> entityOrientation);
+    EntityType getEntityType();
+    void setEntityType(EntityType myEntType);
   };
 #endif
 

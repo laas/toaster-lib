@@ -5,6 +5,7 @@
 // constructor
 
 Robot::Robot(int id) : Agent(id) {
+    setEntityType(ROBOT);
 }
 
 // accessors, mutators

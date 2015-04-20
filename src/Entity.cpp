@@ -82,3 +82,11 @@ std::vector<double> Entity::getOrientation() {
 void Entity::setOrientation(std::vector<double> entityOrientation) {
     orientation_ = entityOrientation;
 }
+
+EntityType Entity::getEntityType(){
+    return entityType;
+}
+
+void Entity::setEntityType(EntityType myEntType){
+    entityType = myEntType;
+}

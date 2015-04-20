@@ -5,6 +5,7 @@
 // Constructor
 
 Joint::Joint(unsigned int jointId, unsigned int agent) : Entity(jointId), jointOwner(agent) {
+    setEntityType(JOINT);
 }
 
 // accessors, mutators

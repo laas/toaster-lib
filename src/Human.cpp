@@ -6,6 +6,7 @@
 // constructor
 
 Human::Human(int id) : Agent(id) {
+    setEntityType(HUMAN);
 }
 
 

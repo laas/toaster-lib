@@ -6,6 +6,7 @@
 // Constructor
 
 Object::Object(unsigned int id) : Entity(id) {
+    setEntityType(OBJECT);
 }
 
 // accessors, mutators
