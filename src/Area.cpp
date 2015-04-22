@@ -5,6 +5,7 @@
 // Constructor
 
 Area::Area(unsigned int areaId) : id(areaId) {
+    myOwner = 0;                            //By default an area has no owner
 }
 
 // functions
