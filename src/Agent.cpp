@@ -18,21 +18,21 @@ Agent::~Agent() {
 
 // Functions
 
-unsigned int Agent::getNbFreeHands() {
-    return freeHands_.size();
+unsigned int Agent::getNbBusyHands() {
+    return busyHands_.size();
 }
 
 bool Agent::isHandFree(std::string hand) {
-    if (std::find(freeHands_.begin(), freeHands_.end(), hand) != freeHands_.end())
-        return true;
-    else
+    if (std::find(busyHands_.begin(), busyHands_.end(), hand) != busyHands_.end())
         return false;
+    else
+        return true;
 }
 
-void Agent::removeFreeHand(std::string busyHand) {
-    std::vector<std::string>::iterator it = std::find(freeHands_.begin(), freeHands_.end(), busyHand);
-    if (it != freeHands_.end())
-        freeHands_.erase(it);
+void Agent::removeBusyHand(std::string busyHand) {
+    std::vector<std::string>::iterator it = std::find(busyHands_.begin(), busyHands_.end(), busyHand);
+    if (it != busyHands_.end())
+        busyHands_.erase(it);
 }
 
 
