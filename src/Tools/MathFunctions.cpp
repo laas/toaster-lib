@@ -1,5 +1,6 @@
 #include "Tools/MathFunctions.h"
 
+// TODO: do this with boost!
 void MathFunctions::multiplyMatrices4x4(double* result, double* mat1, double* mat2) {
 
     result[0] = mat1[0] * mat2[0] + mat1[1]*(mat2 + 4)[0] + mat1[2]*(mat2 + 8)[0] + mat1[3]*(mat2 + 12)[0];

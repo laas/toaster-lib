@@ -49,12 +49,12 @@ void Area::setName(std::string areaName) {
     name = areaName;
 }
 
-bool Area::getIsRoom() {
-    return isRoom;
+std::string Area::getAreaType() {
+    return areaType;
 }
 
-void Area::setIsRoom(bool room) {
-    isRoom = room;
+void Area::setAreaType(std::string type) {
+    areaType = type;
 }
 
 std::string Area::getFactType() {

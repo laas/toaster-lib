@@ -32,16 +32,16 @@ public:
 
     // Get the number of elements currently stored in the TRBuffer.
 
-    boost::circular_buffer<long>::size_type size() {
+    boost::circular_buffer<unsigned long>::size_type size() {
         return m_TimeBuffer.size();
     }
     // Get the maximum number of elements stored in the TRBuffer.
 
-    boost::circular_buffer<long>::size_type capacity() {
+    boost::circular_buffer<unsigned long>::size_type capacity() {
         return m_TimeBuffer.capacity();
     }
 
-    boost::circular_buffer<long>::size_type max_size() {
+    boost::circular_buffer<unsigned long>::size_type max_size() {
         return m_TimeBuffer.max_size();
     }
 
@@ -97,7 +97,7 @@ public:
 
     // Here after means strictly greater time.
 
-    bool getDataAfter(int time, T &data) {
+    bool getDataAfter(unsigned long time, T &data) {
         int result;
         result = getIndexAfter(time);
         if (result < 0)
@@ -108,7 +108,7 @@ public:
         }
     }
 
-    int getIndex(int time) {
+    int getIndex(unsigned long time) {
         if (!m_TimeBuffer.empty()) {
             for (int i = 0; i < m_TimeBuffer.size() && i <= time; i++) {
                 if (m_TimeBuffer[i] == time)
@@ -137,11 +137,11 @@ public:
         }
     }
 
-    long getTimeFromIndex(int index) {
+    long getTimeFromIndex(unsigned int index) {
         return m_TimeBuffer[index];
     }
 
-    T getDataFromIndex(int index) {
+    T getDataFromIndex(unsigned int index) {
         return m_DataBuffer[index];
     }
 };
