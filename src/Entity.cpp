@@ -8,6 +8,16 @@
 // Constructor
 
 Entity::Entity(unsigned int entityId) : id(entityId) {
+    name = ""; // Entity might have a name
+    time = 0; // time of data in microseconds
+    confidence = 0;
+    roomId = 0;
+
+    bg::model::point<double, 3, bg::cs::cartesian> origin(0, 0, 0); // Entity position
+    position_ = origin;
+    orientation_.push_back(0.0); // Entity orientation
+    orientation_.push_back(0.0); // Entity orientation
+    orientation_.push_back(0.0); // Entity orientation
 }
 
 //functions
@@ -83,10 +93,10 @@ void Entity::setOrientation(std::vector<double> entityOrientation) {
     orientation_ = entityOrientation;
 }
 
-EntityType Entity::getEntityType(){
+EntityType Entity::getEntityType() {
     return entityType;
 }
 
-void Entity::setEntityType(EntityType myEntType){
+void Entity::setEntityType(EntityType myEntType) {
     entityType = myEntType;
 }
