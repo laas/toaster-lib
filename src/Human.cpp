@@ -5,7 +5,7 @@
 
 // constructor
 
-Human::Human(int id) : Agent(id) {
+Human::Human(std::string id) : Agent(id) {
     setEntityType(HUMAN);
 }
 

@@ -9,8 +9,8 @@
 
 class Object : public Entity {
 private:
-    unsigned int supportFurniture; // id from supporting furniture if any
-    unsigned int container; // id from object containing current
+    std::string supportFurniture; // id from supporting furniture if any
+    std::string container; // id from object containing current
 
 
 
@@ -20,14 +20,14 @@ public:
     std::vector<int> closeObjects_; // List of id from object next to current
 
     // Constructor
-    Object(unsigned int id);
+    Object(std::string id);
 
     // accessors, mutators
-    int getSupportFurniture();
-    void setSupportFurniture(unsigned int idFurniture);
+    std::string getSupportFurniture();
+    void setSupportFurniture(std::string idFurniture);
 
-    int getContainerId();
-    void setContainerId(unsigned int idContainer);
+    std::string getContainerId();
+    void setContainerId(std::string idContainer);
 };
 
 #endif

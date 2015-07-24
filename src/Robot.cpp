@@ -4,16 +4,16 @@
 
 // constructor
 
-Robot::Robot(int id) : Agent(id) {
+Robot::Robot(std::string id) : Agent(id) {
     setEntityType(ROBOT);
 }
 
 // accessors, mutators
 
-int Robot::getMaxSpeed() {
+double Robot::getMaxSpeed() {
     return maxSpeed;
 }
 
-void Robot::setSpeed(int speed) {
+void Robot::setSpeed(double speed) {
     maxSpeed = speed;
 }

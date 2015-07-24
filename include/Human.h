@@ -13,7 +13,7 @@ private:
 public:
 
     // constructor
-    Human(int id);
+    Human(std::string id);
 
     // accessors, mutators
     int getAge();

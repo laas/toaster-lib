@@ -9,21 +9,21 @@
 class MovableObject : public Object {
 private:
 
-    int supportObject; // Movable object may be on top of other object
+    std::string supportObject; // Movable object may be on top of other object
 
 public:
-    std::vector<int> graspableBy_; // Define who can grasp this item
+    std::vector<std::string> graspableBy_; // Define who can grasp this item
 
     // Constructor
-    MovableObject(unsigned int id);
+    MovableObject(std::string id);
 
     // functions
-    void removeAgentGrasper(int agentId);
-    bool canGrasp(int agentId);
+    void removeAgentGrasper(std::string agentId);
+    bool canGrasp(std::string agentId);
 
     // accessors, mutators
-    int getSupportObject();
-    void setSupportObject(int idObject);
+    std::string getSupportObject();
+    void setSupportObject(std::string idObject);
 
 };
 

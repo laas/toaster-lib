@@ -5,7 +5,7 @@
 
 // constructor
 
-Agent::Agent(unsigned int id) : Entity(id) {
+Agent::Agent(std::string id) : Entity(id) {
 }
 
 // destructor

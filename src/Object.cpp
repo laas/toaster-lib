@@ -5,24 +5,24 @@
 
 // Constructor
 
-Object::Object(unsigned int id) : Entity(id) {
+Object::Object(std::string id) : Entity(id) {
     setEntityType(OBJECT);
 }
 
 // accessors, mutators
 
-int Object::getSupportFurniture() {
+std::string Object::getSupportFurniture() {
     return supportFurniture;
 }
 
-void Object::setSupportFurniture(unsigned int idFurniture) {
+void Object::setSupportFurniture(std::string idFurniture) {
     supportFurniture = idFurniture;
 }
 
-int Object::getContainerId() {
+std::string Object::getContainerId() {
     return container;
 }
 
-void Object::setContainerId(unsigned int idContainer) {
+void Object::setContainerId(std::string idContainer) {
     container = idContainer;
 }

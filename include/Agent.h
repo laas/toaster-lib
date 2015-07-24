@@ -22,7 +22,7 @@ public:
     std::map<std::string, Joint*> skeleton_; // Map Agent joint name with a joint
 
     // constructor
-    Agent(unsigned int id);
+    Agent(std::string id);
 
     // destructor
     ~Agent();

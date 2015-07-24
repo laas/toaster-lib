@@ -13,7 +13,7 @@
   {
 
   private:
-    unsigned int id;						// each entity has a unic id
+    std::string id;						// each entity has a unic id
     std::string name;						// Entity might have a name
     unsigned long time;						// time of data in microseconds
     unsigned int confidence;
@@ -26,15 +26,15 @@
     std::vector<unsigned int> inArea_;			         // Entity might be in a specific area(s)
 
     // Constructor
-    Entity(unsigned int entityId);
+    Entity(std::string entityId);
 
     // functions
     bool isInArea(unsigned int areaId);
     void removeInArea(unsigned int areaId);
 
     // accessors, mutators
-    unsigned int getId();
-    void setId(unsigned int entId);
+    std::string getId();
+    void setId(std::string entId);
     unsigned long getTime();
     void setTime(unsigned long entTime);
     std::string getName();

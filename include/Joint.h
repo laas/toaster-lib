@@ -7,16 +7,16 @@
 
 class Joint : public Entity {
 private:
-    unsigned int jointOwner; // Agent from which this joint is
+    std::string jointOwner; // Agent from which this joint is
 
 public:
 
     // Constructor
-    Joint(unsigned int jointId, unsigned int jointOwner);
+    Joint(std::string jointId, std::string jointOwner);
 
     // accessors, mutators
-    unsigned int getAgentId();
-    void setAgentId(unsigned int agentId);
+    std::string getAgentId();
+    void setAgentId(std::string agentId);
 };
 
 #endif

@@ -7,8 +7,8 @@
 
 // Constructor
 
-Entity::Entity(unsigned int entityId) : id(entityId) {
-    name = ""; // Entity might have a name
+Entity::Entity(std::string entityId) : id(entityId) {
+    name = "entityId"; // Entity might have a name
     time = 0; // time of data in microseconds
     confidence = 0;
     roomId = 0;
@@ -37,11 +37,11 @@ void Entity::removeInArea(unsigned int areaId) {
 
 // accessors, mutators
 
-unsigned int Entity::getId() {
+std::string Entity::getId() {
     return id;
 }
 
-void Entity::setId(unsigned int entId) {
+void Entity::setId(std::string entId) {
     id = entId;
 }
 

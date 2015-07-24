@@ -8,15 +8,15 @@
 
 class Robot : public Agent {
 private:
-    int maxSpeed; // A robot has a maximum speed.
+    double maxSpeed; // A robot has a maximum speed.
 public:
 
     // constructor
-    Robot(int id);
+    Robot(std::string id);
 
     // accessors, mutators
-    int getMaxSpeed();
-    void setSpeed(int speed);
+    double getMaxSpeed();
+    void setSpeed(double speed);
 };
 
 #endif

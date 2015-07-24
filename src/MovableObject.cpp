@@ -5,18 +5,18 @@
 
 // Constructor
 
-MovableObject::MovableObject(unsigned int id) : Object(id) {
+MovableObject::MovableObject(std::string id) : Object(id) {
 }
 
 // functions
 
-void MovableObject::removeAgentGrasper(int agentId) {
-    std::vector<int>::iterator i = std::find(graspableBy_.begin(), graspableBy_.end(), agentId);
+void MovableObject::removeAgentGrasper(std::string agentId) {
+    std::vector<std::string>::iterator i = std::find(graspableBy_.begin(), graspableBy_.end(), agentId);
     if (i != graspableBy_.end())
         graspableBy_.erase(i);
 }
 
-bool MovableObject::canGrasp(int agentId) {
+bool MovableObject::canGrasp(std::string agentId) {
     if (std::find(graspableBy_.begin(), graspableBy_.end(), agentId) != graspableBy_.end())
         return true;
     else
@@ -25,10 +25,10 @@ bool MovableObject::canGrasp(int agentId) {
 
 // accessors, mutators
 
-int MovableObject::getSupportObject() {
+std::string MovableObject::getSupportObject() {
     return supportObject;
 }
 
-void MovableObject::setSupportObject(int idObject) {
+void MovableObject::setSupportObject(std::string idObject) {
     supportObject = idObject;
 }

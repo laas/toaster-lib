@@ -4,17 +4,17 @@
 
 // Constructor
 
-Joint::Joint(unsigned int jointId, unsigned int agent) : Entity(jointId), jointOwner(agent) {
+Joint::Joint(std::string jointId, std::string agent) : Entity(jointId), jointOwner(agent) {
     setEntityType(JOINT);
 }
 
 // accessors, mutators
 
-unsigned int Joint::getAgentId() {
+std::string Joint::getAgentId() {
     return jointOwner;
 }
 
-void Joint::setAgentId(unsigned int agentId) {
+void Joint::setAgentId(std::string agentId) {
     jointOwner = agentId;
 };
 

@@ -5,18 +5,18 @@
 // Constructor
 
 Area::Area(unsigned int areaId) : id(areaId) {
-    myOwner = 0;                            //By default an area has no owner
+    myOwner = "";                            //By default an area has no owner
 }
 
 // functions
 
-void Area::removeEntity(unsigned int entId) {
-    std::vector<unsigned int>::iterator i = std::find(insideEntities_.begin(), insideEntities_.end(), entId);
+void Area::removeEntity(std::string entId) {
+    std::vector<std::string>::iterator i = std::find(insideEntities_.begin(), insideEntities_.end(), entId);
     if (i != insideEntities_.end())
         insideEntities_.erase(i);
 }
 
-bool Area::isIdInArea(unsigned int id) {
+bool Area::isIdInArea(std::string id) {
     if (std::find(insideEntities_.begin(), insideEntities_.end(), id) != insideEntities_.end())
         return true;
     else
@@ -33,11 +33,11 @@ void Area::setId(unsigned int areaId) {
     id = areaId;
 }
 
-unsigned int Area::getMyOwner() {
+std::string Area::getMyOwner() {
     return myOwner;
 }
 
-void Area::setMyOwner(int ownerId) {
+void Area::setMyOwner(std::string ownerId) {
     myOwner = ownerId;
 }
 
