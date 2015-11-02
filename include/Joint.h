@@ -11,6 +11,8 @@ private:
 
 public:
 
+    double position; // Angular position of the joint.
+
     // Constructor
     Joint(std::string jointId, std::string jointOwner);
 

@@ -6,6 +6,7 @@
 
 Joint::Joint(std::string jointId, std::string agent) : Entity(jointId), jointOwner(agent) {
     setEntityType(JOINT);
+    position = 0.0;
 }
 
 // accessors, mutators
