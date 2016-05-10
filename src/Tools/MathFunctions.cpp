@@ -61,3 +61,119 @@ double MathFunctions::relativeAngle(Entity* ent1, Entity* ent2, double angleDir)
 
     return angleDir - actualAngleDir;
 }
+
+Vec_t MathFunctions::multiplyMatVec(const Mat_t &a, const Vec_t &x)
+{
+  int i,j;
+  int m = a.size();
+  int n = x.size();
+
+  Vec_t prod(m);
+
+  for(i = 0; i < m; i++){
+    prod[i] = 0.;
+    for(j = 0; j < n; j++)
+      prod[i] += a[i][j]*x[j];
+  }
+  return prod;
+}
+
+Vec_t MathFunctions::diffVec(const Vec_t &a , const Vec_t &b)
+{
+    int i;
+    int m = a.size();
+    int n = b.size();
+    if (m == n)
+    {
+        Vec_t diff(m);
+        for (int i = 0; i < m; ++i)
+        {
+            diff[i]=a[i]-b[i];
+        }
+        return diff;
+    } else {
+
+    }
+        return (Vec_t)0;
+}
+
+Mat_t MathFunctions::matrixfromAngle(const int &angleType , const double &angle)
+{
+    Mat_t mat(3);
+    Vec_t row0;
+    Vec_t row1;
+    Vec_t row2;
+
+    if (angleType==0)
+    {
+        row0.push_back(1.0);
+        row0.push_back(0.0);
+        row0.push_back(0.0);
+        
+        row1.push_back(0.0);
+        row1.push_back(cos(angle));
+        row1.push_back(-sin(angle));
+        
+        row2.push_back(0.0);
+        row2.push_back(sin(angle));
+        row2.push_back(cos(angle));
+        
+    }else{
+        if (angleType==1)
+        {
+            row0.push_back(cos(angle));
+            row0.push_back(0.0);
+            row0.push_back(sin(angle));
+            
+            row1.push_back(0.0);
+            row1.push_back(1.0);
+            row1.push_back(0.0);
+            
+            row2.push_back(-sin(angle));
+            row2.push_back(0.0);
+            row2.push_back(cos(angle));
+        }else{
+            row0.push_back(cos(angle));
+            row0.push_back(-sin(angle));
+            row0.push_back(0.0);
+            
+            row1.push_back(sin(angle));
+            row1.push_back(cos(angle));
+            row1.push_back(0.0);
+            
+            row2.push_back(0.0);
+            row2.push_back(0.0);
+            row2.push_back(1.0);
+        }
+    }
+    mat[0]=row0;
+    mat[1]=row1;
+    mat[2]=row2;
+    return mat;
+}
+
+double MathFunctions::magn(const Vec_t &a)
+{
+    int n=a.size();
+    double magn=0;
+    for (int i = 0; i < n; ++i)
+    {
+        magn+=a[i]*a[i];
+    }
+    return sqrt(magn);
+}
+
+double MathFunctions::dotProd(const Vec_t &a, const Vec_t &b)
+{
+    int n=a.size();
+    int m=b.size();
+    double dotProd=0;
+    if (n==m)
+    {
+        for (int i = 0; i < m; ++i)
+        {
+            dotProd+=a[i]*b[i];
+        }
+    }
+    return dotProd;
+}
