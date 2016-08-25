@@ -2,7 +2,7 @@
 // i.e. an object that can't be moved by an agent.
 
 #ifndef STATIC_OBJECT_H
-  #define STATIC_OBJECT_H
+#define STATIC_OBJECT_H
 
 
 #include "Object.h"
@@ -14,8 +14,8 @@ private:
 
 
 public:
-
-    // accessors, mutators
+    // Constructor
+    StaticObject(std::string id);
 
 };
 
