@@ -7,11 +7,8 @@
 // Constructor
 
 MovableIoTObject::MovableIoTObject(std::string id) : MovableObject(id) {
-    printf("New MovableIoTObject : %s", id.c_str());
+    printf("New MovableIoTObject : %s\n", id.c_str());
 }
-
-// functions
-
 
 // accessors, mutators
 
@@ -19,6 +16,6 @@ std::string MovableIoTObject::getValue() {
     return value;
 }
 
-void MovableIoTObject::setValue(std::string value) {
-    value = value;
+void MovableIoTObject::setValue(std::string newValue) {
+    value = newValue;
 }
