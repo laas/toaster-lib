@@ -1,15 +1,9 @@
 // This class define a static object.
 // i.e. an object that can't be moved by an agent.
 
-#include "Object.h"
+#include "StaticObject.h"
 
-class StaticObject : public Object {
-private:
+// Constructor
 
-
-public:
-
-    // accessors, mutators
-
-};
-
+StaticObject::StaticObject(std::string id) : Object(id) {
+}
