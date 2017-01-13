@@ -9,12 +9,13 @@ Area::Area(unsigned int areaId) : id(areaId) {
 }
 
 // functions
-
+/**
 void Area::removeEntity(std::string entId) {
     std::vector<std::string>::iterator i = std::find(insideEntities_.begin(), insideEntities_.end(), entId);
     if (i != insideEntities_.end())
         insideEntities_.erase(i);
 }
+**/
 
 bool Area::isIdInArea(std::string id) {
     if (std::find(insideEntities_.begin(), insideEntities_.end(), id) != insideEntities_.end())
@@ -79,4 +80,75 @@ bool Area::getIsCircle() {
 
 void Area::setIsCircle(bool circle) {
     isCircle = circle;
+}
+
+void Area::addInsideEntity(std::string EntityID) {
+	insideEntities_.push_back(EntityID);	
+}
+
+void Area::addUpcomingEntity(std::string EntityID) {
+	upcomingEntities_.push_back(EntityID);	
+}
+
+void Area::addLeavingEntity(std::string EntityID) {
+	leavingEntities_.push_back(EntityID);		
+}
+
+bool Area::removeInsideEntity(std::string EntityID) {
+	std::vector<std::string>::iterator i = std::find(insideEntities_.begin(), insideEntities_.end(), EntityID);
+    if (i != insideEntities_.end()){
+        insideEntities_.erase(i);
+        return true;
+	}
+	else 
+		return false;
+}
+
+bool Area::removeUpcomingEntity(std::string EntityID){
+    std::vector<std::string>::iterator i = std::find(upcomingEntities_.begin(), upcomingEntities_.end(), EntityID);
+    if (i != upcomingEntities_.end()){
+        upcomingEntities_.erase(i);
+        return true;
+	}
+	else 
+		return false;
+		
+}
+
+bool Area::removeLeavingEntity(std::string EntityID){
+	std::vector<std::string>::iterator i = std::find(leavingEntities_.begin(), leavingEntities_.end(), EntityID);
+    if (i != leavingEntities_.end()){
+        leavingEntities_.erase(i);
+        return true;
+	}
+	else 
+		return false;
+        		
+}
+
+bool Area::isInsideEntity(std::string EntityID){
+	std::vector<std::string>::iterator i = std::find(insideEntities_.begin(), insideEntities_.end(), EntityID);
+    if (i != insideEntities_.end()){
+        return true;
+	}
+	else 
+		return false;
+}
+
+bool Area::isLeavingEntity(std::string EntityID){
+	std::vector<std::string>::iterator i = std::find(leavingEntities_.begin(), leavingEntities_.end(), EntityID);
+    if (i != leavingEntities_.end()){
+        return true;
+	}
+	else 
+		return false;
+}
+
+bool Area::isUpcomingEntity(std::string EntityID){
+    std::vector<std::string>::iterator i = std::find(upcomingEntities_.begin(), upcomingEntities_.end(), EntityID);
+    if (i != upcomingEntities_.end()){
+        return true;
+	}
+	else 
+		return false;	
 }
