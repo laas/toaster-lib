@@ -10,6 +10,7 @@ class MovableObject : public Object {
 private:
 
     std::string supportObject; // Movable object may be on top of other object
+    std::string value;		
 
 public:
     std::vector<std::string> graspableBy_; // Define who can grasp this item
@@ -24,6 +25,9 @@ public:
     // accessors, mutators
     std::string getSupportObject();
     void setSupportObject(std::string idObject);
+
+    std::string getValue();
+    void setValue(std::string value);
 
 };
 

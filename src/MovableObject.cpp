@@ -32,3 +32,13 @@ std::string MovableObject::getSupportObject() {
 void MovableObject::setSupportObject(std::string idObject) {
     supportObject = idObject;
 }
+
+std::string MovableObject::getValue()
+{
+  return value;
+}
+
+void MovableObject::setValue(std::string p_value)
+{
+  value = p_value;
+}
