@@ -7,13 +7,11 @@
 
 class CircleArea : public Area {
 private:
-    bg::model::point<double, 3, bg::cs::cartesian> center_; // position of the center
-    double ray_; // ray of the circle
-    bg::model::point<double, 3, bg::cs::cartesian> centerRelative_; // If area is updated from owner,
+    bg::model::point<double, 3, bg::cs::cartesian> center; // position of the center
+    double ray; // ray of the circle
+    bg::model::point<double, 3, bg::cs::cartesian> centerRelative; // If area is updated from owner,
                                                                 // we may want an offset from this owner
-    double height_; // height of the cylinder (circle with height)
-    double enterHysteresis_ ;
-    double leaveHysteresis_ ;
+    double height; // height of the cylinder (circle with height)
 
 public:
 
@@ -22,15 +20,16 @@ public:
 
     // function
     bool isPointInArea(bg::model::point<double, 3, bg::cs::cartesian> point, std::string entityID);
-
+    double enterHysteresis ;
+    double leaveHysteresis ;
     // accessors, mutators
-    bg::model::point<double, 3, bg::cs::cartesian> getCenter()                  { return center_; }
-    void setCenter(bg::model::point<double, 3, bg::cs::cartesian> areaCenter)   { center_ = areaCenter; }
-    double getRay()           { return ray_; }
-    void setRay(double ray)   { ray_ = ray; }
-    double getHeight()         { return height_; }
-    void setHeight(double heightInz)   { height_ = heightInz; }
-    bg::model::point<double, 3, bg::cs::cartesian> getCenterRelative()   { return centerRelative_; }
+    bg::model::point<double, 3, bg::cs::cartesian> getCenter();
+    void setCenter(bg::model::point<double, 3, bg::cs::cartesian> areaCenter);
+    double getRay();
+    void setRay(double ray);	
+    double getHeight();
+    void setHeight(double heightInz);
+    bg::model::point<double, 3, bg::cs::cartesian> getCenterRelative();
 };
 
 #endif
