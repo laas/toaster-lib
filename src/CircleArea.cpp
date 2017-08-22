@@ -3,116 +3,108 @@
 #include "CircleArea.h"
 #include "Tools/MathFunctions.h"
 
-CircleArea::CircleArea(int areaId, bg::model::point<double, 3, bg::cs::cartesian> areaCenter, double areaRay, double heightInz, double EnterHysteresis, double LeaveHysteresis) :
-						Area(areaId),
-						center_(areaCenter), centerRelative_(areaCenter),
-						ray_(areaRay), height_(heightInz),
-						enterHysteresis_(EnterHysteresis), leaveHysteresis_(LeaveHysteresis)
-{
+
+// Constructor
+
+CircleArea::CircleArea(int areaId, bg::model::point<double, 3, bg::cs::cartesian> areaCenter, double areaRay, double heightInz, double EnterHysteresis, double LeaveHysteresis) : Area(areaId), center(areaCenter), centerRelative(areaCenter), ray(areaRay), height(heightInz), enterHysteresis(EnterHysteresis), leaveHysteresis(LeaveHysteresis) {
 }
+
+// function
+//TODO
 
 // checks if given point is in the cylinrical area
 bool CircleArea::isPointInArea(bg::model::point<double, 3, bg::cs::cartesian> point, std::string entityID) {
+	bg::model::point<double, 2, bg::cs::cartesian> point2d;
+	bg::model::point<double, 2, bg::cs::cartesian> center2d;
 	double x = point.get<0>();
 	double y = point.get<1>();
 	double z = point.get<2>();
-	bg::model::point<double, 2, bg::cs::cartesian> point2d;
 	point2d.set<0>(x);
 	point2d.set<1>(y);
-
-	double cx = getCenter().get<0>();
-	double cy = getCenter().get<1>();
-	double cz = getCenter().get<2>();
-	bg::model::point<double, 2, bg::cs::cartesian> center2d;
+	bg::model::point<double, 3, bg::cs::cartesian> center = getCenter();
+	double cx = center.get<0>();
+	double cy = center.get<1>();
+	double cz = center.get<2>();
 	center2d.set<0>(cx);
 	center2d.set<1>(cy);
-
-	double pointCenterDistance = bg::distance(point2d, center2d);
-	double leaveDistance = getRay() + leaveHysteresis_;
-	double enterDistance = getRay() - enterHysteresis_;
-
-	double h = getHeight();
-	double upLimit = cz + h/2.;
-	double downLimit = cz - h/2.;
-
-	bool isOut = (pointCenterDistance > leaveDistance) &&
-								(z > upLimit + leaveHysteresis_) &&
-								(z < downLimit - leaveHysteresis_);
-
-	if(isOut)
-	{
-		removeInsideEntity(entityID);
-		removeUpcomingEntity(entityID);
-		removeLeavingEntity(entityID);
-		return false ;
-	}
-	else
-	{
-		bool isInLeaving = (pointCenterDistance <= leaveDistance) &&
-												(pointCenterDistance > getRay()) &&
-												(z <= upLimit + leaveHysteresis_) &&
-												(z > upLimit) &&
-												(z >= downLimit - leaveHysteresis_) &&
-												(z < downLimit);
-		if(isInLeaving)
-		{
-			if(isInsideEntity(entityID))
-			{
-				removeInsideEntity(entityID);
-				addLeavingEntity(entityID);
-				return true;
+	double h = getHeight();	
+// if point is in outermost cylinder
+    if ((bg::distance(point2d, center2d) < (getRay() + leaveHysteresis)) && (z < cz + h/2 + leaveHysteresis) && (z > cz - h/2 - leaveHysteresis)){   
+   // if point is in innermost cylinder
+        if((bg::distance(point2d, center2d) < (getRay() - enterHysteresis)) && (z < cz + h/2 - enterHysteresis) && (z > cz - h/2 + enterHysteresis)){
+			if(isUpcomingEntity(entityID)){ // was approaching toward innermost cyliner and now just entered it
+	           	removeUpcomingEntity(entityID);
+	           	addInsideEntity(entityID);
+	          	return true;
 			}
-			else if(isLeavingEntity(entityID))
-				return true;
-			else if(isUpcomingEntity(entityID))
+			else if(enterHysteresis == 0 && leaveHysteresis == 0) // to handle teh case with no hysteresis
 			{
-				removeUpcomingEntity(entityID);
-				return false;
+				if(isInsideEntity(entityID))
+					return true;
+				else {
+				addInsideEntity(entityID) ;
+			    return true;
+					
+					}
+			  	
 			}
 			else
-				return false;
-		}
-		else
-		{
-			bool isInComming = (pointCenterDistance > enterDistance) &&
-													(pointCenterDistance <= getRay()) &&
-													(z > upLimit + enterHysteresis_) &&
-													(z <= upLimit) &&
-													(z < downLimit - enterHysteresis_) &&
-													(z >= downLimit);
-			if(isInComming)
 			{
-				if(isInsideEntity(entityID))
-					return true;
-				else if(isLeavingEntity(entityID))
-				{
-					removeLeavingEntity(entityID);
-					addInsideEntity(entityID);
-					return true;
-				}
-				else if(isUpcomingEntity(entityID))
-					return false;
-				else
-				{
-					addUpcomingEntity(entityID);
-					return false;
-				}
+				return true;
 			}
-			else // isInside
-			{
-				if(isInsideEntity(entityID))
-					return true;
-				else
-				{
-					if(isUpcomingEntity(entityID))
-						removeUpcomingEntity(entityID);
-					else if(isLeavingEntity(entityID))
-						removeLeavingEntity(entityID);
+       }
+       else {
+		    if(isInsideEntity(entityID)){ // still between innermost and outermost cylinder
+				return true;
+		    }
+		    else{
+			  addUpcomingEntity(entityID); // just entered outermost cylinder
+		      return false;		      
+		  }
+        }
+       }
+    else {
+		if(isInsideEntity(entityID)){  //just left outermost cylinder
+			removeInsideEntity(entityID); // it is no more inside the cylinder so remove it
+			addLeavingEntity(entityID);
+		    return false ;
+		}
+		else 
+		{
+			
+			 return false ;
+			
+		}
+		   
+		} 
 
-					addInsideEntity(entityID);
-					return true;
-				}
-			} // else isInComming <=> isInside
-		} // else isInLeaving
-	} // else isOut
+}
+
+// accessors, mutators
+
+bg::model::point<double, 3, bg::cs::cartesian> CircleArea::getCenter() {
+    return center;
+}
+
+void CircleArea::setCenter(bg::model::point<double, 3, bg::cs::cartesian> areaCenter) {
+    center = areaCenter;
+}
+
+double CircleArea::getRay() {
+    return ray;
+}
+
+void CircleArea::setRay(double areaRay) {
+    ray = areaRay;
+}
+
+bg::model::point<double, 3, bg::cs::cartesian> CircleArea::getCenterRelative() {
+    return centerRelative;
+}
+
+double CircleArea::getHeight(){
+	return height;
+}
+void CircleArea::setHeight(double heightInz){
+	height = heightInz;
 }

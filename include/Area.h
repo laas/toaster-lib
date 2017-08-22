@@ -16,7 +16,7 @@ protected:
     std::string areaType;  // If an area is a room or other types...
     std::string factType;  // This is used to know what fact we should compute
     std::string entityType; // This is used to know what entities are concerned: entities, agents, robots, humans, objects
-    bool isCircle_;         // To know if it is a circle area or a polygon one.
+    bool isCircle;         // To know if it is a circle area or a polygon one.
 
 public:
     std::vector<std::string> insideEntities_; // Entities present in that area
@@ -33,20 +33,20 @@ public:
     bool isIdInArea(std::string id);
 
     // accessors, mutators
-    unsigned int getId()                  { return id; }
-    void setId(unsigned int areaId)       { id = areaId; }
-    std::string getMyOwner()              { return myOwner; }
-    void setMyOwner(std::string ownerId)  { myOwner = ownerId; }
-    std::string getName()                 { return name; }
-    void setName(std::string areaName)    { name = areaName; }
-    std::string getAreaType()             { return areaType; }
-    void setAreaType(std::string type)    { areaType = type; }
-    std::string getFactType()             { return factType; }
-    void setFactType(std::string myFactType) { factType = myFactType; }
-    std::string getEntityType()           { return entityType; }
-    void setEntityType(std::string myEntityType) { entityType = myEntityType; }
-    bool getIsCircle()                    { return isCircle_; }
-    void setIsCircle(bool isCircle)       { isCircle_ = isCircle; }
+    unsigned int getId();
+    void setId(unsigned int areaId);
+    std::string getMyOwner();
+    void setMyOwner(std::string ownerId);
+    std::string getName();
+    void setName(std::string areaName);
+    std::string getAreaType();
+    void setAreaType(std::string type);
+    std::string getFactType();
+    void setFactType(std::string myFactType);
+    std::string getEntityType();
+    void setEntityType(std::string myEntityType);
+    bool getIsCircle();
+    void setIsCircle(bool isCircle);
     void addInsideEntity(std::string EntityID);
     void addUpcomingEntity(std::string EntityID);
     void addLeavingEntity(std::string EntityID);
@@ -56,10 +56,6 @@ public:
     bool isInsideEntity(std::string EntityID);
     bool isLeavingEntity(std::string EntityID);
     bool isUpcomingEntity(std::string EntityID);
-
-  private:
-    bool removeFromVector(std::string id, std::vector<std::string> vect);
-    bool findInVector(std::string id, std::vector<std::string> vect);
 };
 
 #endif
