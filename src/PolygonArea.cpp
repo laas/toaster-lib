@@ -8,7 +8,10 @@ BOOST_GEOMETRY_REGISTER_BOOST_TUPLE_CS(cs::cartesian)
 using namespace std;
 
 // constructor
-PolygonArea::PolygonArea(int areaId, double points[][2], unsigned int polySize, double zmin, double zmax, double enter, double leave) : Area(areaId), enterHysteresis(enter), leaveHysteresis(leave) {
+PolygonArea::PolygonArea(int areaId, double points[][2], unsigned int polySize, double zmin, double zmax, double enter, double leave) :
+    Area(areaId),
+    enterHysteresis_(enter), leaveHysteresis_(leave)
+{
     for (unsigned int i = 0; i < polySize; i++) {
         bg::model::d2::point_xy<double> p(points[i][0], points[i][1]);
         bg::append(polyRelative_, p);
@@ -16,426 +19,272 @@ PolygonArea::PolygonArea(int areaId, double points[][2], unsigned int polySize, 
     }
     z = boost::make_tuple(zmin , zmax);
     zRelative = boost::make_tuple(zmin , zmax);
-
 }
 
+int PolygonArea::isInside(std::vector<point_t> vertex, point_t p)
+{
+	int i, j, cross = 0;
+	for (i = 0, j = vertex.size() - 1; i < vertex.size(); j = i++)
+	{
+		if (((vertex[i].y > p.y) != (vertex[j].y > p.y)) &&
+			(p.x < (vertex[j].x - vertex[i].x) * (p.y - vertex[i].y) / (vertex[j].y - vertex[i].y) + vertex[i].x))
+			cross = !cross;
+	}
+	return cross;
+}
 
-// check if given point is in 2.5D areas
-bool PolygonArea::isPointInArea(bg::model::point<double, 3, bg::cs::cartesian> point, std::string entityID) {
+std::vector<segement_t> PolygonArea::offsetingPolygon(std::vector<point_t> vertices, double offset)
+{
+	std::vector<segement_t > segements;
+	std::vector<point_t>::const_iterator itNext;
 
-    boost::tuple<double, double> p = boost::make_tuple(point.get<0>(), point.get<1>());
-    bg::model::polygon<bg::model::d2::point_xy<double> > enter_poly_;
-    bg::model::polygon<bg::model::d2::point_xy<double> > leave_poly_;
+	for (std::vector<point_t>::iterator itVect = vertices.begin(); itVect < vertices.end(); ++itVect)
+	{
+		double x1 = itVect->x;
+		double y1 = itVect->y;
 
-    double zmin = z.get<0>();
-    double zmax = z.get<1>();
-    std::vector<boost::tuple<double, double> > vertices;
-    std::vector<boost::tuple<double, double, double> > mc;
-    // extracts vertices of main polygon into vector 
-    std::vector<boost::tuple<double, double> >::const_iterator it;
-        for (int i = 0; i != poly_.outer().size(); ++i) {
-        double x = boost::geometry::get<0>(poly_.outer()[i]);
-        double y = boost::geometry::get<1>(poly_.outer()[i]);
-        boost::tuple<double, double> pv1 = boost::make_tuple(x,y);
-        vertices.push_back(pv1);
-    }
- int r = 1;
-    for(std::vector<boost::tuple<double, double> >::iterator i = vertices.begin(); i < vertices.end(); ++i){
-        double x1 = i->get<0>();
-        double y1 = i->get<1>();
-        if(i+1 == vertices.end())
-          it = vertices.begin();
-        else
-          it = i+1;
-        double a , m, c;
-        double x2 = it->get<0>();
-        double y2 = it->get<1>();
-        // finds the parameters of line's equations. The equation line has the form a*y = m*x + c. where slope is m/a and intercept is c/a .
-        if(x2 != x1)
-        {   a = 1;
-            m = (y2 - y1)/(x2 - x1);
-            c = y1 - m*x1;
-        } else {
-            a = 0;
-            m = 1;
-            c = -x1;
-        }
-        r = r + 1 ;
-        if(i+2 == vertices.end())
-          it = vertices.begin();
-        else if(i+1 == vertices.end())
-           {it = vertices.begin() + 1;}
-        else 
-          it = i+2;
-        double x ;
-        double x3 = it->get<0>();
-        double y3 = it->get<1>();
-        // x is calculated to find the direction in which line is to be shifted
-        if(m!=0)
-			x = (a*y3 - c)/m;
-		else {
-		  if(y3 > c) {
-			// shifts the line by changing the intercept to get edge of inner polygon  
-			c = c + enterHysteresis ;
-			boost::tuple<double, double, double> mc1 = boost::make_tuple(a, m, c);
-            mc.push_back(mc1); 			  
-		  }
-		  else {
+		//find the next point
+		if (itVect + 1 == vertices.end())
+			itNext = vertices.begin();
+		else
+			itNext = itVect + 1;
+
+		double a, m, c;
+		double x2 = itNext->x;
+		double y2 = itNext->y;
+		// finds the parameters of line's equations. The equation line has the form a*y = m*x + c. where slope is m/a and intercept is c/a .
+		if (x2 != x1)
+		{
+			a = 1;
+			m = (y2 - y1) / (x2 - x1);
+			c = y1 - m*x1;
+		}
+		else
+    {
+			a = 0;
+			m = 1;
+			c = -x1;
+		}
+		if (itVect + 2 == vertices.end())
+			itNext = vertices.begin();
+		else if (itVect + 1 == vertices.end())
+			itNext = vertices.begin() + 1;
+		else
+			itNext = itVect + 2;
+
+		double x;
+		double x3 = itNext->x;
+		double y3 = itNext->y;
+
+		if (m == 0)
+		{
+			if (y3 > c) // shifts the line by changing the intercept to get edge of inner polygon
+				c = c + offset;
+			else // shifts the line by changing the intercept to get edge of inner polygon
+				c = c - offset;
+		}
+		else //if(m != 0)
+		{
+			double cTmp;
+			x = (a*y3 - c) / m; // x is calculated to find the direction in which line is to be shifted
 			// shifts the line by changing the intercept to get edge of inner polygon
-			c = c - enterHysteresis ;
-			boost::tuple<double, double, double> mc1 = boost::make_tuple(a, m, c);
-            mc.push_back(mc1);  
-			  
-		  } 	
-						
-		}
-		
-		if(m != 0)	{
-		// shifts the line by changing the intercept to get edge of inner polygon
-        if(x3 > x )
-        {
-          if(-c/m > 0)
-          {
-			if (c < 0){
-            c = -(abs(c / sqrt(m*m + a*a)) + enterHysteresis)*(sqrt(m*m + a*a));
-            
-		} else {
-			c = (abs(c / sqrt(m*m + a*a)) + enterHysteresis)*(sqrt(m*m + a*a));
-            
-			
-			}
-            boost::tuple<double, double, double> mc1 = boost::make_tuple(a, m, c);
-            mc.push_back(mc1);
-
-          }
-          else
-          {
-			if (c < 0){
-            c = -(abs(c / sqrt(m*m + a*a)) - enterHysteresis)*(sqrt(m*m + a*a));
-            
-		} else {
-			c = (abs(c / sqrt(m*m + a*a)) - enterHysteresis)*(sqrt(m*m + a*a));
-            
-			
-			}
-            boost::tuple<double, double, double> mc1 = boost::make_tuple(a, m, c);
-            mc.push_back(mc1);
-
-          }
-        }
-        else
-        {
-          if(-c/m > 0)
-          {
-			if (c < 0){
-            c = -(abs(c / sqrt(m*m + a*a)) - enterHysteresis)*(sqrt(m*m + a*a));
-            
-		} else {
-			c = (abs(c / sqrt(m*m + a*a)) - enterHysteresis)*(sqrt(m*m + a*a));
-            
-			
-			}
-            boost::tuple<double, double, double> mc1 = boost::make_tuple(a, m, c);
-            mc.push_back(mc1);
-
-          }
-          else
-          {
-			if (c < 0){
-            c = -(abs(c / sqrt(m*m + a*a)) + enterHysteresis)*(sqrt(m*m + a*a));
-            
-		} else {
-			c = (abs(c / sqrt(m*m + a*a)) + enterHysteresis)*(sqrt(m*m + a*a));
-           
-			
-			}
-            boost::tuple<double, double, double> mc1 = boost::make_tuple(a, m, c);
-            mc.push_back(mc1);
-
-          }
-        
-	  }
-    }
-   }
-		std::vector<boost::tuple<double, double, double> >::iterator it2 ;
-        //std::cout << "Enter polygon is :"<<endl;
-        int s = 1;
-        double xend1 ;
-        double yend1 ;
-        for(std::vector<boost::tuple<double, double, double> >::iterator i = mc.begin(); i != mc.end(); ++i){
-            if(i+1 == mc.end())
-              it2 = mc.begin();
-            else
-              it2  = i + 1;
-           double a1 = boost::get<0>(*i) ;
-           double m1 = boost::get<1>(*i) ;
-           double c1 = boost::get<2>(*i) ;
-           double a2 = boost::get<0>(*it2) ;
-           double m2 = boost::get<1>(*it2) ;
-           double c2 = boost::get<2>(*it2) ;
-           double x, y ;
-           // calculates intersection points of shifted lines to get vertices of inner polygon
-           if (a1 != 0 && a2 != 0) {
-			 x = ((c2/a2) - (c1/a1))/((m1/a1) - (m2/a2)) ;
-			 y = (m1*x + c1)/a1 ;
-		   } else {
-			 if(a1 == 0)
-			  {
-				  x =  -c1 / m1 ;
-				  y = (m2*x + c2)/a2 ;
-			  }   
-			  else 
-			  {
-				  x = -c2 / m2 ;
-				  y = (m1*x + c1)/a1 ;  
-			  }
-			   
-		   }
-		   		
-		   	if(i == mc.begin()) {
-				xend1 = x;
-				yend1 = y;
-			}	
-            boost::tuple<double, double> xy = boost::make_tuple(x, y);
-            bg::append(enter_poly_,xy);
-           
-           // std::cout<< s <<". x is "<< x << " and y is "<< y << endl;
-            s = s + 1;
-        }
-	boost::tuple<double, double> xy = boost::make_tuple(xend1, yend1);
-    bg::append(enter_poly_,xy);
-    std::vector<boost::tuple<double, double, double> > mc2;
-    // extraction of vertices from original polygon
-    for(std::vector<boost::tuple<double, double> >::iterator i = vertices.begin(); i < vertices.end(); ++i){
-        double x1 = i->get<0>();
-        double y1 = i->get<1>();
-        if(i+1 == vertices.end())
-          it = vertices.begin();
-        else
-          it = i+1;
-        double a , m, c;
-        double x2 = it->get<0>();
-        double y2 = it->get<1>();
-        if(x2 != x1)
-        {   a = 1;
-            m = (y2 - y1)/(x2 - x1);
-            c = y1 - m*x1;
-
-        } else {
-            a = 0;
-            m = 1;
-            c = -x1;
-        }
-        r = r + 1 ;
-        if(i+2 == vertices.end())
-          it = vertices.begin();
-        else if(i+1 == vertices.end())
-           {it = vertices.begin() + 1;}
-        else 
-          it = i+2;
-        double x ;
-        double x3 = it->get<0>();
-        double y3 = it->get<1>();
-        if(m!=0)
-			x = (a*y3 - c)/m;
-		else {
-		  if(y3 > c) {
-			 // shifts the line by changing the intercept to get edge of outer polygon
-			c = c - leaveHysteresis ;
-			boost::tuple<double, double, double> mc1 = boost::make_tuple(a, m, c);
-            mc2.push_back(mc1); 			  
-		  }
-		  else {
-			// shifts the line by changing the intercept to get edge of outer polygon
-			c = c + leaveHysteresis ;
-			boost::tuple<double, double, double> mc1 = boost::make_tuple(a, m, c);
-            mc2.push_back(mc1);  
-			  
-		  } 	
-						
-		}
-		
-		if(m != 0)	{
-			// shifts the line by changing the intercept to get edge of outer polygon
-        if(x3 > x )
-        {
-          if(-c/m > 0)
-          {
-			if (c < 0){
-            c = -(abs(c / sqrt(m*m + a*a)) - leaveHysteresis)*(sqrt(m*m + a*a));
-            
-		} else {
-			c = (abs(c / sqrt(m*m + a*a)) - leaveHysteresis)*(sqrt(m*m + a*a));
-            
-			
-			}
-            boost::tuple<double, double, double> mc1 = boost::make_tuple(a, m, c);
-            mc2.push_back(mc1);
-
-          }
-          else
-          {
-			if (c < 0){
-            c = -(abs(c / sqrt(m*m + a*a)) + leaveHysteresis)*(sqrt(m*m + a*a));
-            
-		} else {
-			c = (abs(c / sqrt(m*m + a*a)) + leaveHysteresis)*(sqrt(m*m + a*a));
-            
-			
-			}
-            boost::tuple<double, double, double> mc1 = boost::make_tuple(a, m, c);
-            mc2.push_back(mc1);
-
-          }
-        }
-        else
-        {
-          if(-c/m > 0)
-          {
-			if (c < 0){
-            c = -(abs(c / sqrt(m*m + a*a)) + leaveHysteresis)*(sqrt(m*m + a*a));
-            
-		} else {
-			c = (abs(c / sqrt(m*m + a*a)) + leaveHysteresis)*(sqrt(m*m + a*a));
-            
-			
-			}
-            boost::tuple<double, double, double> mc1 = boost::make_tuple(a, m, c);
-            mc2.push_back(mc1);
-
-          }
-          else
-          {
-			if (c < 0){
-            c = -(abs(c / sqrt(m*m + a*a)) - leaveHysteresis)*(sqrt(m*m + a*a));
-            
-		} else {
-			c = (abs(c / sqrt(m*m + a*a)) - leaveHysteresis)*(sqrt(m*m + a*a));
-           
-			
-			}
-            boost::tuple<double, double, double> mc1 = boost::make_tuple(a, m, c);
-            mc2.push_back(mc1);
-
-          }
-        
-	}
-        }
-	}
-  
-int t = 1;
-std::vector<boost::tuple<double, double, double> >::iterator it3 ;
-double xend2 ;
-double yend2;
-//cout << "leave polygon is : "<<endl;
-        for(std::vector<boost::tuple<double, double, double> >::iterator i = mc2.begin(); i < mc2.end(); ++i){
-            if(i+1 == mc2.end())
-              it3 = mc2.begin();
-            else
-              it3  = i + 1;
-           double a1 = boost::get<0>(*i) ;
-           double m1 = boost::get<1>(*i) ;
-           double c1 = boost::get<2>(*i) ;
-           double a2 = boost::get<0>(*it3) ;
-           double m2 = boost::get<1>(*it3) ;
-           double c2 = boost::get<2>(*it3) ;
-           double x, y ;
-           // calculates intersection of outward shifted lines to find vertices of outer polygon
-           if (a1 != 0 && a2 != 0) {
-			 x = ((c2/a2) - (c1/a1))/((m1/a1) - (m2/a2)) ;
-			 y = (m1*x + c1)/a1 ;
-		   } else {
-			 if(a1 == 0)
-			  {
-				  x =  -c1 / m1 ;
-				  y = (m2*x + c2)/a2 ;
-			  }   
-			  else 
-			  {
-				  x = -c2 / m2 ;
-				  y = (m1*x + c1)/a1 ;  
-			  }
-			   
-		   }
-		    if(i == mc2.begin()) {
-				xend2 = x;
-				yend2 = y;
-			}
-		    			
-            boost::tuple<double, double> xy = boost::make_tuple(x, y);
-            bg::append(leave_poly_,xy);
-           
-           // std::cout<< s <<". x is "<< x << " and y is "<< y << endl;
-            s = s + 1;
-        }
-        xy = boost::make_tuple(xend2, yend2);
-        bg::append(leave_poly_,xy) ;
-       // if point is inside the outermost 2.5D polygon 
-       if ( bg::within(p, leave_poly_) && ( point.get<2>() < zmax + leaveHysteresis )  && ( point.get<2>() > zmin - leaveHysteresis )  ){
-        // if point is inside the innermost 2.5D polygon
-        if ( bg::within(p, enter_poly_) && ( point.get<2>() < zmax - enterHysteresis )  && ( point.get<2>() > zmin + enterHysteresis )  ){
-            if(isUpcomingEntity(entityID)){ // signs of entity was approching towards this area or is on boundary
-	           	removeUpcomingEntity(entityID);
-	           	addInsideEntity(entityID); // and finally it entered inside
-	          	return true;
-			}
-			else if(enterHysteresis == 0 && leaveHysteresis == 0)
+			if (x3 > x)
 			{
-				if(isInsideEntity(entityID)) // handle the case where no hysteresis exist
-					return true;
-				else {
-				addInsideEntity(entityID) ;
-			    return true;
-					
-				}	
+				if (-c / m > 0)
+					cTmp = (abs(c / sqrt(m*m + a*a)) + offset)*(sqrt(m*m + a*a));
+				else
+					cTmp = (abs(c / sqrt(m*m + a*a)) - offset)*(sqrt(m*m + a*a));
 			}
 			else
 			{
+				if (-c / m > 0)
+					cTmp = (abs(c / sqrt(m*m + a*a)) - offset)*(sqrt(m*m + a*a));
+				else
+					cTmp = (abs(c / sqrt(m*m + a*a)) + offset)*(sqrt(m*m + a*a));
+			}
+
+			if (c < 0)
+				cTmp = -cTmp;
+			c = cTmp;
+		} // end m != 0
+
+		segements.push_back(segement_t(a, m, c));
+	} // end for itVect
+	return segements;
+}
+
+point_t PolygonArea::getIntersect(segement_t seg1, segement_t seg2)
+{
+	double x, y;
+	if (seg1.a != 0 && seg2.a != 0)
+	{
+		x = ((seg2.c / seg2.a) - (seg1.c / seg1.a)) / ((seg1.m / seg1.a) - (seg2.m / seg2.a));
+		y = (seg1.m*x + seg1.c) / seg1.a;
+	}
+	else
+	{
+		if (seg1.a == 0)
+		{
+			x = -seg1.c / seg1.m;
+			y = (seg2.m*x + seg2.c) / seg2.a;
+		}
+		else
+		{
+			x = -seg2.c / seg2.m;
+			y = (seg1.m*x + seg1.c) / seg1.a;
+		}
+	}
+	return point_t(x, y);
+}
+
+void PolygonArea::getInOutPoints(std::vector<point_t> scare, std::vector<point_t> base, point_t& in, point_t& out)
+{
+	vector<int> inPoints;
+	vector<int> outPoints;
+
+	for (unsigned int i = 0; i < 4; i++)
+	{
+		if (isInside(base, scare[i]))
+			inPoints.push_back(i);
+		else
+			outPoints.push_back(i);
+	}
+
+	if (inPoints.size() == 1)
+	{
+		in = scare[inPoints[0]];
+		out = scare[(inPoints[0] + 2)%4];
+	}
+	else
+	{
+		out = scare[outPoints[0]];
+		in = scare[(outPoints[0] + 2) % 4];
+	}
+}
+
+void PolygonArea::extractVectrices(vector<segement_t> segementsOut, vector<segement_t> segementsIn, vector<point_t> base, vector<point_t>& inner, vector<point_t>& outer)
+{
+	unsigned int i, j;
+	for (i = 0, j = segementsOut.size() - 1; i < segementsOut.size(); j = i++)
+	{
+		std::vector<point_t> scare;
+
+		scare.push_back(getIntersect(segementsOut[i], segementsOut[j]));
+		scare.push_back(getIntersect(segementsOut[i], segementsIn[j]));
+		scare.push_back(getIntersect(segementsIn[i], segementsIn[j]));
+		scare.push_back(getIntersect(segementsIn[i], segementsOut[j]));
+
+		point_t in(0, 0);
+		point_t out(0, 0);
+		getInOutPoints(scare, base, in, out);
+		inner.push_back(in);
+		outer.push_back(out);
+	}
+}
+
+// check if given point is in 2.5D areas
+bool PolygonArea::isPointInArea(bg::model::point<double, 3, bg::cs::cartesian> point, std::string entityID)
+{
+  point_t p(point.get<0>(), point.get<1>());
+  double zPoint = point.get<2>();
+  double zmin = z.get<0>();
+  double zmax = z.get<1>();
+  std::vector<boost::tuple<double, double> > vertices;
+  vector<point_t> polygon;
+
+  // extracts vertices of main polygon into vector
+  for (unsigned int i = 0; i != poly_.outer().size(); ++i)
+  {
+    double x = boost::geometry::get<0>(poly_.outer()[i]);
+    double y = boost::geometry::get<1>(poly_.outer()[i]);
+    polygon.push_back(point_t(x,y));
+  }
+
+  std::vector<segement_t> innerSegments = offsetingPolygon(polygon, enterHysteresis_);
+	std::vector<segement_t> outerSegments = offsetingPolygon(polygon, -leaveHysteresis_);
+
+	vector<point_t> enter_poly_;
+	vector<point_t> leave_poly_;
+	extractVectrices(outerSegments, innerSegments, polygon, enter_poly_, leave_poly_);
+
+  bool isOut = !isInside(leave_poly_, p) &&
+							(zPoint > zmax + leaveHysteresis_) &&
+							(zPoint < zmin - leaveHysteresis_);
+
+	if(isOut)
+	{
+		removeInsideEntity(entityID);
+		removeUpcomingEntity(entityID);
+		removeLeavingEntity(entityID);
+		return false ;
+	}
+	else
+	{
+		bool isInLeaving = isInside(leave_poly_, p) &&
+											!isInside(polygon, p) &&
+											(zPoint <= zmax + leaveHysteresis_) &&
+											(zPoint > zmax) &&
+											(zPoint >= zmin - leaveHysteresis_) &&
+											(zPoint < zmin);
+		if(isInLeaving)
+		{
+			if(isInsideEntity(entityID))
+			{
+				removeInsideEntity(entityID);
+				addLeavingEntity(entityID);
 				return true;
 			}
-       }
-       else {
-		    if(isInsideEntity(entityID)){ // is not left the outermost polygon so it is considered to be inside
+			else if(isLeavingEntity(entityID))
 				return true;
-		    }
-		    else{
-			  if(isUpcomingEntity(entityID)) // is still between outermost polygon and main polygon, not entered innermost yet
+			else if(isUpcomingEntity(entityID))
+			{
+				removeUpcomingEntity(entityID);
+				return false;
+			}
+			else
+				return false;
+		}
+		else
+		{
+			bool isInComming = !isInside(enter_poly_, p) &&
+													isInside(polygon, p) &&
+													(zPoint > zmax + enterHysteresis_) &&
+													(zPoint <= zmax) &&
+													(zPoint < zmin - enterHysteresis_) &&
+													(zPoint >= zmin);
+			if(isInComming)
+			{
+				if(isInsideEntity(entityID))
+					return true;
+				else if(isLeavingEntity(entityID))
+				{
+					removeLeavingEntity(entityID);
+					addInsideEntity(entityID);
+					return true;
+				}
+				else if(isUpcomingEntity(entityID))
 					return false;
-				else {
-				addUpcomingEntity(entityID) ; // just enterd the outermost circle
-			    return false;
-					
-				}		      
-		  }
-        }
-       }
-    else {
-		if(isInsideEntity(entityID)){ // just left the outermost circle
-			removeInsideEntity(entityID); // remove it from inside entity
-			addLeavingEntity(entityID);
-		    return false ;
-		}
-		else 
-		{			
-			 return false ;			
-		}
-    }
-}
+				else
+				{
+					addUpcomingEntity(entityID);
+					return false;
+				}
+			}
+			else // isInside
+			{
+				if(isInsideEntity(entityID))
+					return true;
+				else
+				{
+					if(isUpcomingEntity(entityID))
+						removeUpcomingEntity(entityID);
+					else if(isLeavingEntity(entityID))
+						removeLeavingEntity(entityID);
 
-
-// Accessors
-
-bg::model::polygon<bg::model::d2::point_xy<double> > PolygonArea::getPolyRelative() {
-    return polyRelative_;
-}
-
-boost::tuple<double,double> PolygonArea::getZRelative(){
-    return zRelative ;
-}
-
-double PolygonArea::getZmin(){
-    return z.get<0>();
-}
-double PolygonArea::getZmax(){
-    return z.get<1>();
+					addInsideEntity(entityID);
+					return true;
+				}
+			} // else isInComming <=> isInside
+		} // else isInLeaving
+	} // else isOut
 }
