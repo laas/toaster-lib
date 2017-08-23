@@ -207,9 +207,9 @@ bool PolygonArea::isPointInArea(bg::model::point<double, 3, bg::cs::cartesian> p
 	vector<point_t> leave_poly_;
 	extractVectrices(outerSegments, innerSegments, polygon, enter_poly_, leave_poly_);
 
-  bool isOut = !isInside(leave_poly_, p) &&
-							(zPoint > zmax + leaveHysteresis_) &&
-							(zPoint < zmin - leaveHysteresis_);
+  bool isOut = !isInside(leave_poly_, p) ||
+							(zPoint > zmax) ||
+							(zPoint < zmin);
 
 	if(isOut)
 	{
@@ -222,10 +222,8 @@ bool PolygonArea::isPointInArea(bg::model::point<double, 3, bg::cs::cartesian> p
 	{
 		bool isInLeaving = isInside(leave_poly_, p) &&
 											!isInside(polygon, p) &&
-											(zPoint <= zmax + leaveHysteresis_) &&
-											(zPoint > zmax) &&
-											(zPoint >= zmin - leaveHysteresis_) &&
-											(zPoint < zmin);
+											(zPoint <= zmax) &&
+											(zPoint >= zmin);
 		if(isInLeaving)
 		{
 			if(isInsideEntity(entityID))
@@ -248,9 +246,7 @@ bool PolygonArea::isPointInArea(bg::model::point<double, 3, bg::cs::cartesian> p
 		{
 			bool isInComming = !isInside(enter_poly_, p) &&
 													isInside(polygon, p) &&
-													(zPoint > zmax + enterHysteresis_) &&
 													(zPoint <= zmax) &&
-													(zPoint < zmin - enterHysteresis_) &&
 													(zPoint >= zmin);
 			if(isInComming)
 			{
