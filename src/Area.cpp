@@ -57,7 +57,7 @@ bool Area::isUpcomingEntity(std::string EntityID){
   return findInVector(EntityID, upcomingEntities_);
 }
 
-bool Area::removeFromVector(std::string id, std::vector<std::string> vect)
+bool Area::removeFromVector(std::string id, std::vector<std::string>& vect)
 {
   std::vector<std::string>::iterator it = std::find(vect.begin(), vect.end(), id);
     if (it != vect.end())

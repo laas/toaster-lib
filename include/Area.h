@@ -33,6 +33,9 @@ public:
     bool isIdInArea(std::string id);
 
     // accessors, mutators
+    // If you add accessors or mutators please make them here
+    // When you put your function in .h, it will be inline
+    // and will increase the performance of your programm
     unsigned int getId()                  { return id; }
     void setId(unsigned int areaId)       { id = areaId; }
     std::string getMyOwner()              { return myOwner; }
@@ -58,7 +61,7 @@ public:
     bool isUpcomingEntity(std::string EntityID);
 
   private:
-    bool removeFromVector(std::string id, std::vector<std::string> vect);
+    bool removeFromVector(std::string id, std::vector<std::string>& vect);
     bool findInVector(std::string id, std::vector<std::string> vect);
 };
 

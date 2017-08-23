@@ -169,6 +169,8 @@ void PolygonArea::extractVectrices(vector<segement_t> segementsOut, vector<segem
 	{
 		std::vector<point_t> scare;
 
+    //the order of the points is really important
+    // do not change it !!
 		scare.push_back(getIntersect(segementsOut[i], segementsOut[j]));
 		scare.push_back(getIntersect(segementsOut[i], segementsIn[j]));
 		scare.push_back(getIntersect(segementsIn[i], segementsIn[j]));
@@ -176,6 +178,8 @@ void PolygonArea::extractVectrices(vector<segement_t> segementsOut, vector<segem
 
 		point_t in(0, 0);
 		point_t out(0, 0);
+    //It will detect witch point is inside or outside of the base polygon
+    // and take the oposite one
 		getInOutPoints(scare, base, in, out);
 		inner.push_back(in);
 		outer.push_back(out);
@@ -200,9 +204,12 @@ bool PolygonArea::isPointInArea(bg::model::point<double, 3, bg::cs::cartesian> p
     polygon.push_back(point_t(x,y));
   }
 
+  //create the inner and outer segments for each segments of the base polygon
+  // /!\ At this point we can say if segments are really inside or ouside the base polygon
   std::vector<segement_t> innerSegments = offsetingPolygon(polygon, enterHysteresis_);
 	std::vector<segement_t> outerSegments = offsetingPolygon(polygon, -leaveHysteresis_);
 
+  // The vectrice extraction will detect witch is inside and witch is outside the base polygon
 	vector<point_t> enter_poly_;
 	vector<point_t> leave_poly_;
 	extractVectrices(outerSegments, innerSegments, polygon, enter_poly_, leave_poly_);
@@ -224,6 +231,8 @@ bool PolygonArea::isPointInArea(bg::model::point<double, 3, bg::cs::cartesian> p
 											!isInside(polygon, p) &&
 											(zPoint <= zmax) &&
 											(zPoint >= zmin);
+    // Detect if the entity is in the leaving zone
+    // This is different to said that it is leaving !
 		if(isInLeaving)
 		{
 			if(isInsideEntity(entityID))
@@ -248,6 +257,8 @@ bool PolygonArea::isPointInArea(bg::model::point<double, 3, bg::cs::cartesian> p
 													isInside(polygon, p) &&
 													(zPoint <= zmax) &&
 													(zPoint >= zmin);
+      // Detect if the entity is in the entering zone
+      // This is different to said that it is comming !
 			if(isInComming)
 			{
 				if(isInsideEntity(entityID))
