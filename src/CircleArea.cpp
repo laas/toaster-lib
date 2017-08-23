@@ -35,9 +35,9 @@ bool CircleArea::isPointInArea(bg::model::point<double, 3, bg::cs::cartesian> po
 	double upLimit = cz + h/2.;
 	double downLimit = cz - h/2.;
 
-	bool isOut = (pointCenterDistance > leaveDistance) &&
-								(z > upLimit + leaveHysteresis_) &&
-								(z < downLimit - leaveHysteresis_);
+	bool isOut = (pointCenterDistance > leaveDistance) ||
+								(z > upLimit) ||
+								(z < downLimit);
 
 	if(isOut)
 	{
@@ -50,10 +50,8 @@ bool CircleArea::isPointInArea(bg::model::point<double, 3, bg::cs::cartesian> po
 	{
 		bool isInLeaving = (pointCenterDistance <= leaveDistance) &&
 												(pointCenterDistance > getRay()) &&
-												(z <= upLimit + leaveHysteresis_) &&
-												(z > upLimit) &&
-												(z >= downLimit - leaveHysteresis_) &&
-												(z < downLimit);
+												(z <= upLimit) &&
+												(z >= downLimit);
 		if(isInLeaving)
 		{
 			if(isInsideEntity(entityID))
@@ -76,9 +74,7 @@ bool CircleArea::isPointInArea(bg::model::point<double, 3, bg::cs::cartesian> po
 		{
 			bool isInComming = (pointCenterDistance > enterDistance) &&
 													(pointCenterDistance <= getRay()) &&
-													(z > upLimit + enterHysteresis_) &&
 													(z <= upLimit) &&
-													(z < downLimit - enterHysteresis_) &&
 													(z >= downLimit);
 			if(isInComming)
 			{
