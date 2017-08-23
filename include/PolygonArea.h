@@ -38,6 +38,9 @@ public:
     bool isPointInArea(bg::model::point<double, 3, bg::cs::cartesian> point, std::string entityID);
 
     // accessors
+		// If you add accessors or mutators please make them here
+    // When you put your function in .h, it will be inline
+    // and will increase the performance of your programm
     bg::model::polygon<bg::model::d2::point_xy<double> > getPolyRelative() { return polyRelative_; }
     boost::tuple<double,double> getZRelative() { return zRelative ; }
     double getZmin() { return z.get<0>(); }
