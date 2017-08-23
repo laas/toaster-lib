@@ -7,7 +7,7 @@ CircleArea::CircleArea(int areaId, bg::model::point<double, 3, bg::cs::cartesian
 						Area(areaId),
 						center_(areaCenter), centerRelative_(areaCenter),
 						ray_(areaRay), height_(heightInz),
-						enterHysteresis_(EnterHysteresis), leaveHysteresis_(LeaveHysteresis)
+						enterHysteresis_(EnterHysteresis+0.0001), leaveHysteresis_(LeaveHysteresis+0.0001)
 {
 }
 
