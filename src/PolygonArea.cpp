@@ -17,8 +17,8 @@ PolygonArea::PolygonArea(int areaId, double points[][2], unsigned int polySize, 
         bg::append(polyRelative_, p);
         bg::append(poly_, p);
     }
-    z = boost::make_tuple(zmin+0.0001 , zmax+0.0001);
-    zRelative = boost::make_tuple(zmin+0.0001 , zmax+0.0001);
+    z = boost::make_tuple(zmin , zmax);
+    zRelative = boost::make_tuple(zmin , zmax);
 }
 
 int PolygonArea::isInside(std::vector<point_t> vertex, point_t p)
