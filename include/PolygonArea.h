@@ -32,8 +32,6 @@ public:
 
     // Constructor
     PolygonArea(int areaId, double points[][2], unsigned int polySize, double zmin, double zmax, double enter, double leave);
-    double enterHysteresis_ ;
-    double leaveHysteresis_ ;
     // Function
     bool isPointInArea(bg::model::point<double, 3, bg::cs::cartesian> point, std::string entityID);
 

@@ -12,8 +12,6 @@ private:
     bg::model::point<double, 3, bg::cs::cartesian> centerRelative_; // If area is updated from owner,
                                                                 // we may want an offset from this owner
     double height_; // height of the cylinder (circle with height)
-    double enterHysteresis_ ;
-    double leaveHysteresis_ ;
 
 public:
 

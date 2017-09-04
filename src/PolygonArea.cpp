@@ -9,16 +9,17 @@ using namespace std;
 
 // constructor
 PolygonArea::PolygonArea(int areaId, double points[][2], unsigned int polySize, double zmin, double zmax, double enter, double leave) :
-    Area(areaId),
-    enterHysteresis_(enter+0.0001), leaveHysteresis_(leave+0.0001)
+    Area(areaId)
 {
-    for (unsigned int i = 0; i < polySize; i++) {
-        bg::model::d2::point_xy<double> p(points[i][0], points[i][1]);
-        bg::append(polyRelative_, p);
-        bg::append(poly_, p);
-    }
-    z = boost::make_tuple(zmin , zmax);
-    zRelative = boost::make_tuple(zmin , zmax);
+  enterHysteresis_ = enter+0.0001;
+  leaveHysteresis_ = leave+0.0001;
+  for (unsigned int i = 0; i < polySize; i++) {
+      bg::model::d2::point_xy<double> p(points[i][0], points[i][1]);
+      bg::append(polyRelative_, p);
+      bg::append(poly_, p);
+  }
+  z = boost::make_tuple(zmin , zmax);
+  zRelative = boost::make_tuple(zmin , zmax);
 }
 
 int PolygonArea::isInside(std::vector<point_t> vertex, point_t p)
