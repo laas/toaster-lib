@@ -10,6 +10,7 @@
 #define TRBUFFER_H
 
 #include <boost/circular_buffer.hpp>
+#include <iostream>
 
 template <typename T> class TRBuffer {
     boost::circular_buffer<unsigned long> m_TimeBuffer;
@@ -54,7 +55,7 @@ public:
     }
 
     // Insert a new element at the end of the TRBuffer.
-    // If TRBuffer is full, the first element will be removed. 
+    // If TRBuffer is full, the first element will be removed.
     // If the capacity is 0, nothing will be inserted.
 
     void push_back(unsigned long time, const T &data) {
@@ -62,14 +63,14 @@ public:
         m_DataBuffer.push_back(data);
     }
 
-    // Remove the first element from the TRBuffer. 
+    // Remove the first element from the TRBuffer.
 
     void pop_front() {
         m_TimeBuffer.pop_front();
         m_DataBuffer.pop_front();
     }
 
-    // Remove all stored elements from the TRBuffer. 
+    // Remove all stored elements from the TRBuffer.
 
     void clear() {
         m_TimeBuffer.clear();
@@ -114,7 +115,7 @@ public:
                 if (m_TimeBuffer[i] == time)
                     return i;
                 else if (m_TimeBuffer[i] > time) {
-                    printf("[TRBuffer][Warning] No data was found at time %lu\n", time);
+                    std::cout << "[TRBuffer][Warning] No data was found at time " << time << std::endl;
                     return -1;
                 }
             }
@@ -129,10 +130,10 @@ public:
                 if (m_TimeBuffer[i] > time)
                     return i;
             }
-            printf("[TRBuffer][Warning] No data were found after time %lu\n", time);
+            std::cout << "[TRBuffer][Warning] No data were found after time " << time << std::endl;
             return -1;
         } else {
-            printf("[TRBuffer][Warning] Looking for index in empty buffer!\n");
+            std::cout << "[TRBuffer][Warning] Looking for index in empty buffer!" << std::endl;
             return -1;
         }
     }
