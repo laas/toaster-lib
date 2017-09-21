@@ -6,9 +6,10 @@
 CircleArea::CircleArea(int areaId, bg::model::point<double, 3, bg::cs::cartesian> areaCenter, double areaRay, double heightInz, double EnterHysteresis, double LeaveHysteresis) :
 						Area(areaId),
 						center_(areaCenter), centerRelative_(areaCenter),
-						ray_(areaRay), height_(heightInz),
-						enterHysteresis_(EnterHysteresis+0.0001), leaveHysteresis_(LeaveHysteresis+0.0001)
+						ray_(areaRay), height_(heightInz)
 {
+	enterHysteresis_ = EnterHysteresis+0.0001;
+	leaveHysteresis_ = LeaveHysteresis+0.0001;
 }
 
 // checks if given point is in the cylinrical area

@@ -17,6 +17,8 @@ protected:
     std::string factType;  // This is used to know what fact we should compute
     std::string entityType; // This is used to know what entities are concerned: entities, agents, robots, humans, objects
     bool isCircle_;         // To know if it is a circle area or a polygon one.
+    double enterHysteresis_ ;
+    double leaveHysteresis_ ;
 
 public:
     std::vector<std::string> insideEntities_; // Entities present in that area
@@ -50,6 +52,15 @@ public:
     void setEntityType(std::string myEntityType) { entityType = myEntityType; }
     bool getIsCircle()                    { return isCircle_; }
     void setIsCircle(bool isCircle)       { isCircle_ = isCircle; }
+    double getEnterHysteresis()           { return enterHysteresis_; }
+    void setEnterHysteresis(double enterHysteresis) { enterHysteresis_ = enterHysteresis; }
+    double getLeaveHysteresis()           { return leaveHysteresis_; }
+    void setLeaveHysteresis(double leaveHysteresis) { leaveHysteresis_ = leaveHysteresis; }
+
+    std::vector<std::string> getInsideEntities() { return insideEntities_; }
+    std::vector<std::string> getUpcomingEntities() { return upcomingEntities_; }
+    std::vector<std::string> getLeavingEntities() { return leavingEntities_; }
+
     void addInsideEntity(std::string EntityID);
     void addUpcomingEntity(std::string EntityID);
     void addLeavingEntity(std::string EntityID);
